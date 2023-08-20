@@ -1,0 +1,129 @@
+
+/* variables */
+:root{
+    --main-font-color:#000000;
+    --secondary-bg-color:#85A89F;
+    --wiki-border:rgba(0, 0, 0, 0.4);
+    --focus-button-color:#233cca;
+    
+}
+html{
+    font-size: 12px;
+}
+
+/* images */
+
+.arrow-right{
+   transform: rotate(180deg);
+  
+}
+
+img{
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+}
+/* layout */
+body{
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+main{
+
+   height: 80%;
+}
+header{
+    padding: 0.3em;
+    height: 15%;
+}
+footer{
+    height: 10%;
+}
+.input-username{
+    width: 90%;
+    min-height: 20px;
+    margin-bottom: 1em;
+}
+.header-img-container{
+    width: 20%;
+    min-width: 50px;
+}
+.avatar-image-container{
+    width: 70%;
+}
+.arrow-img{
+    width: 12%;
+}
+.flex{
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+.flex-horizontal{
+    display: flex;
+    align-items: center;
+}
+.avatar-picker-container{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-bottom: 1.5em;
+    padding: 0.2em;
+    padding-bottom: 1em;
+    border-bottom: var(--wiki-border) solid 0.3px ;
+}
+.container{
+    padding: 0.5em;
+    border-radius: 0.5em;
+    width: 80%;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin: 0 auto;
+    border: var(--wiki-border) solid 0.3px;
+}
+
+.center-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.input-container{
+    width: 100%;
+}
+button{
+    padding: 0.5em;
+    width: 10%;
+    min-width: fit-content;
+}
+button:hover,
+button:focus{
+    color: var(--focus-button-color);
+    text-decoration: underline;
+    border-color:var(--focus-button-color) ;
+}
+.input-container label{
+    display: none;
+    font-size: 2rem;
+    margin-bottom: 1em;
+}
+@media (min-width: 650px) {
+    html{
+        font-size: 16px;
+    }
+    .container{
+        flex-direction: row;
+    }
+    .avatar-picker-container{
+        border-bottom: 0px;
+    }
+    .input-container{
+        width: 80%;
+    }
+    .input-container label{
+        margin: 1em auto;
+        display: inline;
+    }
+  }

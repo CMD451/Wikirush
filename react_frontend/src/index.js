@@ -2,12 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import { JoinLobbyView } from './components/joinView/JoinLobbyView';
+import { Hub } from './components/Hub.js/Hub';
 import reportWebVitals from './reportWebVitals';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Hub />
   </React.StrictMode>
 );
 
