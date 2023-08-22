@@ -8,6 +8,11 @@ constantly
 cryptography
 daphne
 Django
+djangorestframework
+markdown 
+channels_redis
+django-filter 
+djangorestframework-simplejwt
 hyperlink
 idna
 incremental

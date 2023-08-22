@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import { JoinLobbyView } from '../joinView/JoinLobbyView';
 import { LobbyView } from '../lobby/LobbyView';
+import { generateId } from '../../util/generateId';
 
 
 export const UserContext = React.createContext({
@@ -23,6 +24,9 @@ export function Hub() {
         if (uri.length > 0) {
             setLobbyUri(uri);
         }
+        let newUser = user
+        newUser['id'] =  generateId(user['username']);
+        setUser(newUser)
         setJoined(true);
     }
     function generateContent() {
