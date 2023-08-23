@@ -13,20 +13,15 @@ export function JoinLobbyView(props) {
 
     function onAvatarChange(e){
         setAvatarUrl(e);
-        updateParent();
     }
     function onUsernameChange(e){
         setUsername(e);
-        updateParent();
-
     }
-    function updateParent(){
+    useEffect(()=>{
         if("onChange" in props){
             props.onChange({"username":username,"avatarUrl":avatarUrl})
         }
-    }
-
-
+    },[username,avatarUrl])
     return (
         <React.Fragment>
             <header className="flex-horizontal">

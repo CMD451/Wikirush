@@ -12,7 +12,8 @@ export function UsernameInput(props) {
         //if valid
         setUsername(event.target.value)
         if('onChange' in props){
-            props.onChange(username);
+            console.log(event.target.value)
+            props.onChange(event.target.value);
         }
     }
     return (

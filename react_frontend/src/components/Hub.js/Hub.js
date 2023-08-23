@@ -7,7 +7,6 @@ import { generateId } from '../../util/generateId';
 
 export const UserContext = React.createContext({
     user: null,
-    setUser: () => { }
 });
 
 
@@ -15,6 +14,7 @@ export function Hub() {
     const [lobbyUri,setLobbyUri] = useState(null)
     const [user, setUser] = useState({})
     const [joined, setJoined] = useState(false)
+    
 
 
     function OnJoinLobby() {
@@ -30,7 +30,6 @@ export function Hub() {
         setJoined(true);
     }
     function generateContent() {
-        console.log(joined)
         if (joined) {
             return (
                 <UserContext.Provider value={{ user, setUser }}>

@@ -7,21 +7,22 @@ export function PlayerList(props) {
         if (!'players' in props) {
             return
         }
-        console.log(props.players)
         let playersArray = props.players.map(player => {
-            console.log(player)
+            let usernameStyle = "username"
+            if(('currentPlayer' in props)&&(props.currentPlayer.pk == player.pk)){
+                usernameStyle+=" current-player"
+            }
             return (
                 <div className="single-player-container flex">
                     <div className="avatar">
                         <img src={player['avatarUrl']}/>
                     </div>
-                    <div className="username">
+                    <div className={usernameStyle}>
                         <p>{player['username']}</p>
                     </div>
                 </div>
             )
         });
-        console.log(playersArray)
         return playersArray
     }
     return (
