@@ -3,12 +3,19 @@ from django.db import models
 # Create your models here.
 
 
-
 class Lobby(models.Model):
     class Meta:
         ordering = ['creationTimestamp']
     uri = models.CharField(max_length=50)
+    owner = models.ForeignKey("Member",blank=True,on_delete=models.SET_NULL,null=True,related_name="ownedLobby")
     creationTimestamp = models.DateTimeField(auto_now_add=True)
+    #change default
+    lobbyOwnerToken = models.TextField(max_length = 50,default="0000000")
+
+
+    def save(self,*args,**kwargs):
+        self.lobbyOwnerToken = "UFO:"+str(self.creationTimestamp)+self.uri
+        super(Lobby,self).save(*args,**kwargs)
 
     #settings
 

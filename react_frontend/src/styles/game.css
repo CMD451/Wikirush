@@ -32,7 +32,10 @@ img{
 .current-player{
     color: goldenrod;
 }
-
+.lobby-owner{
+    text-decoration: underline;
+    font-weight: 900;
+}
 
 /* styles */
 .box-shadow{

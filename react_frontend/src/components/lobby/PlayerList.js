@@ -12,13 +12,16 @@ export function PlayerList(props) {
             if(('currentPlayer' in props)&&(props.currentPlayer.pk == player.pk)){
                 usernameStyle+=" current-player"
             }
+            if(('ownerPk' in props)&&(props.ownerPk == player.pk)){
+                usernameStyle+= " lobby-owner"
+            }
             return (
                 <div className="single-player-container flex">
                     <div className="avatar">
                         <img src={player['avatarUrl']}/>
                     </div>
                     <div className={usernameStyle}>
-                        <p>{player['username']}</p>
+                        <p>{player['username']}  </p>
                     </div>
                 </div>
             )
