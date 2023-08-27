@@ -83,23 +83,38 @@ class GameConsumer(AsyncWebsocketConsumer):
         print("Removing user:" + str(self.member_pk))
         await remove_member(self.member_pk,self.room_name)
         
+
+    async def start_game_action(self,json_data):
+        if json_data['owner_token'] != await get_lobbyOwnerToken(self.room_name):
+            return
+        await self.channel_layer.group_send(
+             self.room_group_name,
+             {
+                  "type":"start_game",
+                  "content":""
+             }
+        )
+         
+
     actions = {
           'user_join':user_joined_action,
           'user_left':user_left_action,
-          'fetch_members':fetch_members
+          'fetch_members':fetch_members,
+          'start_game':start_game_action
     }
     async def disconnect(self, close_code):
         await self.actions['user_left'](self)
         lobby = await get_lobby(self.room_name)
 
         #if deletion of member caused the lobby to be ownerless desigante new owner
-        if not await is_lobby_owner_set(lobby):
+        if not await is_lobby_owner_set(lobby) and await get_lobby_members_count(lobby) > 0:
             await self.designate_new_owner(await get_oldest_lobby_member(lobby))
              
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
+
     async def receive(self, text_data):
             print("Recive PK: " + str(self.member_pk))
             json_data = json.loads(text_data)
@@ -124,4 +139,6 @@ class GameConsumer(AsyncWebsocketConsumer):
                 await self.designate_as_owner()
             await self.standard_message_send(event)
             
+    async def start_game(self,event):
+        await self.standard_message_send(event)
             

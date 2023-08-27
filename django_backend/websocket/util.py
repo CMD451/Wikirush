@@ -78,3 +78,7 @@ def serialize_lobby_member(member):
 @database_sync_to_async
 def get_oldest_lobby_member(lobby):
     return lobby.members.all()[0]
+
+@database_sync_to_async
+def get_lobby_members_count(lobby):
+    return len(lobby.members.all())

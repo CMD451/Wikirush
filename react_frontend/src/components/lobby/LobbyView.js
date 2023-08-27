@@ -1,19 +1,49 @@
 import React from 'react';
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { JoinLobbyView } from '../joinView/JoinLobbyView';
 import { UserContext } from '../Hub.js/Hub';
 import WebSocketInstance from '../../websocket/websocket';
 import { PlayerList } from '../lobby/PlayerList'
+import { SettingsPanel } from './SettingsPanel';
+import {useIsOwner} from './hooks/useIsOwner'
+import { Game } from './Game';
 import '../../styles/game.css'
 
 
 export function LobbyView(props) {
     const { user, setUser } = React.useContext(UserContext);
     const [players, setPlayers] = useState([]);
-    const [ownerPk,setOwnerPk] = useState([0]);
-    const [ownerToken,setOwnerToken] = useState([""]);
-    const [currentUser,setCurrentUser] = useState(user)
+    const [ownerPk, setOwnerPk] = useState([0]);
+    const [ownerToken, setOwnerToken] = useState([""]);
+    const [currentUser, setCurrentUser] = useState(user)
+    //const [isOwner] = useIsOwner(currentUser,ownerPk)
+    let isOwner = ownerPk == currentUser.pk
     let isFirstRender = useRef(true);
+
+
+    const [currentContent, setCurrentContent] = useState("menu")
+    let content = {
+        menu: (
+            <React.Fragment>
+                <SettingsPanel OnStartButtonClick={sendStartGameAction} isOwner={isOwner}   />
+                <PlayerList players={players} currentPlayer={currentUser} ownerPk={ownerPk} />
+            </React.Fragment>
+        ),
+        game: (
+            <Game/>
+        )
+        
+        
+    }
+
+    function sendStartGameAction(){
+        WebSocketInstance.sendMessage(
+            {
+                action:"start_game",
+                owner_token:ownerToken
+            }
+        )
+    }
 
     function setCallbacks() {
         WebSocketInstance.setOnOpenCallback(() => {
@@ -37,7 +67,7 @@ export function LobbyView(props) {
                     setPlayers(data['content'].filter(member => (member.pk != currentUser.pk)))
                     break;
                 case "user_left":
-                    setPlayers(players.filter((member)=>(member.pk != data['content'].pk)))
+                    setPlayers(players.filter((member) => (member.pk != data['content'].pk)))
                     break;
                 case 'owner_update':
                     setOwnerPk(data['content']);
@@ -45,51 +75,38 @@ export function LobbyView(props) {
                 case 'designate_as_owner':
                     setOwnerToken(data['content'])
                     break;
-            }   
+                case 'start_game':
+                    alert("Starting the game")
+                    setCurrentContent("game")
+            }
         })
     }
 
     useEffect(() => {
         setCallbacks();
     })
-    useEffect(()=>{
-        WebSocketInstance.connect("chledb2");
-    },[])
-    useEffect(() =>{
-        if(isFirstRender){
+    useEffect(() => {
+        WebSocketInstance.connect("chledb22");
+    }, [])
+    useEffect(() => {
+        if (isFirstRender) {
             isFirstRender = false
             return
         }
         WebSocketInstance.sendMessage({
-            action:"fetch_members",
-            message:"package"
+            action: "fetch_members",
+            message: "package"
         })
 
-    },[currentUser])
-    function GO(e){
-        WebSocketInstance.sendMessage({
-            action:'fetch_members'
-        })
-    }
+    }, [currentUser])
+
     return (
         <main>
             <div className="main-container">
-                <div className="settings-container flex">
-                    <div className="start-options flex-horizontal">
-                        <div className="buttons-container">
-                            <button onClick={GO}>Ropocznij</button>
-                            <button>Zaproś</button>
-                        </div>
-                    </div>
-                    <div className="settings box-shadow">
+                {content[currentContent]}
+            </div>
 
-                    </div>
-
-                </div>
-            <PlayerList players={players} currentPlayer={currentUser} ownerPk={ownerPk}/>
-        </div>
-
-    </main >
+        </main >
     );
 }
 

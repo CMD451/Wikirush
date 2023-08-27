@@ -26,6 +26,7 @@ export function Hub() {
         }
         let newUser = user
         newUser['id'] =  generateId(user['username']);
+        newUser['pk'] = -1
         setUser(newUser)
         setJoined(true);
     }
