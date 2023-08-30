@@ -1,0 +1,1006 @@
+/**
+ * Styl CSS importowany do wszystkich skórek poza mobilną. Zawiera wspólne klasy CSS.
+ *
+ * Zobacz też: [[MediaWiki:Vector-2022.css]], [[MediaWiki:Vector.css]],
+ *   [[MediaWiki:Monobook.css]], [[MediaWiki:Timeless.css]].
+ * Mobilne style: [[MediaWiki:Mobile.css]]
+ */
+
+/**
+ * mw-collapsed table tweaks
+ * some tests: [[Wikipedysta:Nux/test table collapse]]
+ */
+ th[colspan] .mw-collapsible-toggle:before {
+	padding-left: .2em;
+}
+.mw-collapsed > caption {
+	width: fit-content;
+}
+ 
+/**
+ * Do zamiany <tt> na <span class="monospace"> lub {{tt|...}}
+ * (zobacz [[Specjalna:LintErrors/obsolete-tag]])
+ */
+.monospace {
+	font-family: monospace;
+}
+
+/***
+ * Uniwersalne style z enwiki
+ */
+/* Unbulleted lists */
+.plainlist ol,
+.plainlist ul {
+    line-height: inherit;
+    list-style: none none;
+    margin: 0;
+}
+.plainlist ol li,
+.plainlist ul li {
+    margin-bottom: 0;
+}
+/*
+ * Uniwersalne style z enwiki - KONIEC
+ **/
+
+/* [[Szablon:Grafika rozwinięta]] */
+@supports (flex-wrap: wrap) {
+	.tmulti .thumbinner {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		width: auto !important;
+		justify-content: center;
+		align-content: flex-start;
+	}
+	.tmulti-header {
+		flex: 0 0 100%;
+	}
+	/* hide clear */
+	.tmulti .thumbinner div:empty {
+		display: none;
+	}
+}
+
+/* Style dla infoboksów */
+
+.infobox {
+	border: 1px solid #a2a9b1;
+	background-color: #f8f8f8;
+	border-collapse: collapse;
+	color: black;
+	font-size: 90%;
+	text-align:left;
+	margin: 0 0 0.4em 1.4em;
+	border-spacing: 0;
+	float: right;
+	clear: right;
+	width: 250px;
+}
+.ambox + .infobox {
+	margin-top: 0.6em;
+}
+.infobox td,
+.infobox th {
+	vertical-align: top;
+	padding: 4px;
+}
+.infobox td > .nopadding td {
+	padding: 0px;
+}
+
+.infobox caption {
+	font-size: larger;
+	margin-left: inherit;
+}
+.infobox.bordered {
+	border-collapse: collapse;
+}
+.infobox.bordered td,
+.infobox.bordered th {
+	border: 1px solid #a2a9b1;
+}
+.infobox.bordered .borderless td,
+.infobox.bordered .borderless th {
+	border: 0;
+}
+
+.infobox.sisterproject {
+	width: 20em;
+	font-size: 90%;
+}
+
+.infobox td > p {
+	margin: 0;
+}
+
+/* styles for bordered infobox with merged rows */
+.infobox.bordered .mergedtoprow td,
+.infobox.bordered .mergedtoprow th {
+	border: 0;
+	border-top: 1px solid #a2a9b1;
+	border-right: 1px solid #a2a9b1;
+}
+
+.infobox.bordered .mergedrow td,
+.infobox.bordered .mergedrow th {
+	border: 0;
+	border-right: 1px solid #a2a9b1;
+}
+.infobox ul,ol { margin-top: 0px; }
+
+/* [[Szablon:Infobox ukryte]] */
+.infobox>tbody>tr>td[colspan]:first-child>.collapsible {
+	width:100%;
+	margin:0;
+	background-color:transparent;
+	font-size:100%;
+	border-spacing: 0;
+	border-collapse:collapse;
+}
+
+
+/******************************************************************************/
+/* Początek CSS dla bezstylowych infoboksów */
+/* [[Moduł:Infobox]] */
+
+.infobox>caption {
+	border-width: 1px;
+	border-color: #a2a9b1;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-right-style: solid;
+	border-bottom-style: none;
+	border-collapse: collapse;
+	color: black;
+	border-spacing: 0;
+	text-align: center;
+	margin: 0;
+	background: #EAECF0;
+	padding: 4px;
+	caption-side: top;
+}
+
+.infobox .wdq-items>th, /* [[Szablon:Język infobox/temp]] */
+.ibox-inner>tbody>tr>th:not([colspan]),
+.infobox>tbody>tr>th:not([colspan]) {
+	text-align: left;
+	font-weight: normal;
+	background-color: #eee;
+	color: #111;
+}
+
+.ibox-inner>tbody>tr>th[colspan],
+.infobox>tbody>tr>th[colspan] {
+	border-top: 1px solid #a2a9b1;
+	text-align: center;
+	font-weight: bold;
+	background-color: #ddd;
+	color: black;
+}
+
+.infobox>tbody>tr.iboxsisterlink {
+	border: 1px solid #a2a9b1;
+	background-color:white;
+	text-align: center;
+}
+
+.infobox>tbody>tr.iboxsisterlink>td>img:first-child {
+	float:left;
+	margin-right: 0.5em;
+}
+
+/* uwidoczniony separator w wierszach */
+.infobox>tbody>.iboxs {
+	border-top: 1px solid #a2a9b1;
+}
+/* dodatkowy separator pod grafiką */
+.infobox .grafika.iboxs {
+	border-bottom: 1px solid #a2a9b1;
+}
+
+/* grafika w infoboksach jest zwykle wyśrodkowana na białym tle */
+.infobox .grafika {
+	background-color: white;
+	text-align: center;
+	vertical-align: middle;
+}
+/* podpis pod grafiką ma mniejszą czcionkę */
+.infobox .grafika>td {
+	font-size: 95%;
+}
+/*
+  wyłączenie upscale dla małych grafik
+  https://pl.wikipedia.org/w/index.php?title=Wikipedia:Kawiarenka/Kwestie_techniczne&oldid=66111621#Rozci%C4%85ganie_ma%C5%82ych_grafik_w_infoboksach
+*/
+.infobox .grafika img {
+	width:unset;
+	height:unset;
+}
+
+/* grafika parami obok siebie */
+.infobox>tbody>tr>td>table.ibox2 {
+	border-spacing: 0;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.infobox>tbody>tr>td>table.ibox2>tbody>tr>td,
+.infobox>tbody>tr>td>table.ibox2>tbody>tr>th {
+	width: 50%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.iboxtab {
+	width: 100%;
+	margin: 0;
+	background-color: transparent;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+.iboxtab>tbody>tr>td,
+.iboxtab>tbody>tr>th {
+	padding: 4px;
+}
+.infobox table.fixed {
+	table-layout: fixed;
+}
+
+.ibox2x1>td {
+	width: 50%;
+}
+.ibox2x1>td+td {
+	border-left: 1px solid #aaa;
+}
+
+/* infobox chronologia */
+.ibox-nav {
+	text-align: center;
+	background: transparent;
+}
+.ibox-nav > td {
+	padding: 0;
+}
+.ibox-nav table {
+	margin: 0;
+	width: 100%;
+	table-layout: fixed;
+}
+.ibox-nav td:nth-child(2):not(:last-child) {
+	width: 34%;
+}
+.ibox-nav td:first-child,
+.ibox-nav td:last-child {
+	width: 33%;
+}
+
+/* ozdobna grafika w linkach do definicji cechy */
+.wdimgdemo,
+.infobox a[title^="d:Property:P"].extiw {
+    padding-left: 22px;
+    background-image: url("//upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg");
+    background-position: left;
+    background-size: 22px 12px;
+    background-repeat: no-repeat;
+    font-family: "Courier New", Courier, monospace;
+}
+
+/* Koniec CSS dla bezstylowych infoboksów */
+/******************************************************************************/
+
+.infobox.bez-grafiki .grafika-z-wikidanych {
+	display: none;
+}
+
+/* Styl dla testowego infoboksu */
+
+table.testbox {
+	display: none;
+}
+
+/* Styl dla testowego wdboksu */
+
+.wdbox .wdextids>tbody>tr>th:not([colspan]) {
+	text-align: left;
+	font-weight: normal;
+	background-color: #eee;
+	color: #555;
+}
+
+.wdbox .wdextids>tbody>tr>th[colspan] {
+	border: 1px solid #a2a9b1;
+	text-align: center;
+	font-weight: bold;
+	background-color: #ddd;
+}
+
+/* Style boksów z Merge i Split */
+
+.messagebox {
+	border: 1px solid #a2a9b1;
+	background-color: #f8f9fa;
+	margin: 0 auto 1em auto;
+	padding: .2em;
+	text-align: justify;
+}
+.messagebox.merge {
+	border: 1px solid #cf9fff;
+	background-color: #f5edf5;
+	text-align: center;
+}
+
+.messagebox.talk {
+	border: 1px solid #c0c090;
+	background-color: #f8eaba;
+}
+
+.messagebox.nested-talk {
+	border: 1px solid #c0c090;
+	background-color: #f8eaba;
+	width: 100%;
+	margin: 2px 4px 2px 4px;
+}
+
+.messagebox.small, .messagebox.small-talk {
+	width: 238px;
+	font-size: 85%;
+	float: right;
+	clear: both;
+	margin: 0 0 1em 1em;
+	line-height: 1.25em;
+}
+
+.messagebox.small-talk {
+	background: #F8EABA;
+}
+
+/* Cell sizes for ambox/tmbox/imbox/cmbox/ombox/fmbox/dmbox message boxes */
+th.mbox-text, td.mbox-text {     /* The message body cell(s) */
+	border: none;
+	padding: 0.25em 0.9em;       /* 0.9em left/right */
+	width: 100%;    /* Make all mboxes the same width regardless of text length */
+}
+
+td.mbox-image {                  /* The left image cell */
+	border: none;
+	padding: 2px 0 2px 0.9em;    /* 0.9em left, 0 right */
+	text-align: center;
+}
+
+td.mbox-imageright {             /* The right image cell */
+	border: none;
+	padding: 2px 0.9em 2px 0;    /* 0 left, 0.9em right */
+	text-align: center;
+}
+
+td.mbox-empty-cell {         /* An empty narrow cell */
+	border: none;
+	padding: 0;
+	width: 1px;
+}
+
+/* Article message box template styles */
+table.ambox {
+	margin: 0 10%;                         /* Will not overlap with other elements */
+	border-collapse: collapse;
+	background-color: #fbfbfb !important;
+	border: 1px solid #a2a9b1;
+	border-left: 10px solid #36c;       /* Default "notice" blue */
+}
+
+table.ambox th.ambox-text, table.ambox td.ambox-text {      /* The message body cell(s) */
+	padding: 0.25em 0.5em;              /* 0.5em left/right */
+	width: 100%;                        /* Make all templates the same width regardless of text size */
+}
+
+table.ambox td.ambox-image {          /* The left image cell */
+	padding: 2px 0 2px 0.5em;         /* 0.5em left, 0 right */
+	text-align: center;
+}
+
+table.ambox td.ambox-imageright {     /* The right image cell */
+	padding: 2px 4px 2px 0;           /* 0 left, 4px right */
+	text-align: center;
+}
+
+table.ambox-notice {
+	border-left: 10px solid #36c;       /* Blue */
+}
+
+table.ambox-delete,
+table.ambox-serious {
+	border-left: 10px solid #d33;       /* Red */
+}
+
+table.ambox-content {
+	border-left: 10px solid #f28500;       /* Orange */
+}
+
+table.ambox-style {
+	border-left: 10px solid #f4c430;       /* Yellow */
+}
+
+table.ambox-merge {
+	border-left: 10px solid #9932cc;       /* Purple */
+}
+
+table.ambox-protection {
+	border-left: 10px solid #bba;          /* Gray */
+}
+
+table.ambox.ambox-mini {                 /* small floating box variant */
+	float: right;
+	clear: right;
+	margin: 0 0 0 1em;
+	width: 25%;
+}
+
+/* poprawa podwójnego obramowania, gdy w artykule znajduje się kilka amboksów */
+/* fixing double border when multiple amboxes present */
+table.ambox + table.ambox {
+	border-top: 0 !important;
+}
+
+/* Talk page message box template styles */
+table.tmbox {
+	margin: 0 10%;                         /* Will not overlap with other elements */
+	border-collapse: collapse;
+	background-color: #f8eaba !important;
+	border: 1px solid #4682b4;
+}
+
+table.tmbox th.tmbox-text, table.tmbox td.tmbox-text {      /* The message body cell(s) */
+	padding: 0.25em 0.5em;              /* 0.5em left/right */
+	width: 100%;                        /* Make all templates the same width regardless of text size */
+}
+
+table.tmbox td.tmbox-image {          /* The left image cell */
+	padding: 2px 0 2px 0.5em;         /* 0.5em left, 0 right */
+	text-align: center;
+}
+
+table.tmbox td.tmbox-imageright {     /* The right image cell */
+	padding: 2px 4px 2px 0;           /* 0 left, 4px right */
+	text-align: center;
+}
+
+table.tmbox-serious {
+	border: 1px solid #d33;       /* Red */
+}
+
+table.tmbox-content {
+	border: 1px solid #f28500;       /* Orange */
+}
+
+table.tmbox-style {
+	border: 1px solid #f4c430;       /* Yellow */
+}
+
+table.tmbox-merge {
+	border: 1px solid #9932cc;       /* Purple */
+}
+
+table.tmbox-protection {
+	border: 1px solid #bba;          /* Gray */
+}
+
+table.tmbox.tmbox-mini {                 /* small floating box variant */
+	float: right;
+	clear: right;
+	margin: 0 0 0 1em;
+	width: 25%;
+}
+
+/* poprawa podwójnego obramowania, gdy na stronie dyskusji znajduje się kilka tmboksów */
+/* fixing double border when multiple tmboxes present */
+table.tmbox + table.tmbox {
+	margin-top: 4px !important;
+}
+
+/* Footer and header message box styles */
+table.fmbox {
+	clear: both;
+	margin: 0.2em 0;
+	width: 100%;
+	border: 1px solid #a2a9b1;
+	background: #f8f9fa;     /* Default "system" gray */
+}
+table.fmbox-system {
+	background: #f8f9fa;
+}
+table.fmbox-warning {
+	border: 1px solid #bb7070;  /* Dark pink */
+	background: #ffdbdb;        /* Pink */
+}
+table.fmbox-editnotice {
+	background: transparent;
+}
+
+/* Klasa dokumentacji */
+.template-documentation {
+	background-color:#ECFCF4;
+	border:1px solid #a2a9b1;
+	clear:both;
+	margin:1em 0pt 0pt;
+	padding:5px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Prawie wszystko skopiowane do [[Szablon:Navbox/styles.css]] i tam zmieniane */
+/* default skin for navigation boxes */
+.navbox {            /* navbox container style */
+	border:1px solid #a2a9b1;
+	margin:auto;
+	text-align:center;
+	padding:1px;
+}
+.navbox:not(.pionowy) {
+	margin-top: 1em; /* odstęp pomiędzy navboksem a tekstem  */
+	clear:both;
+}
+table.navbox:not(.pionowy) {
+	width: 100%; /* tymczasowa kopia z templatestyles, na czas migracji */
+}
+.navbox.pionowy {
+	width: 250px; /* styl infoboksowy */
+	float: right;
+	clear: right;
+	margin: 0 0 0.4em 1.4em;
+}
+.navbox + .navbox {
+	border-top: 0;
+	margin-top: 0;        /* single pixel border between adjacent navboxes (doesn't work for IE6, but that's okay) */
+}
+.navbox > tbody > tr > th {
+	background: #ccf;
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* universalna ramka zamiast szablonu border */
+#bodyContent .ramka {
+	display:table-cell;
+	border-collapse:collapse;
+	border:1px solid #BBB;
+}
+
+/* zapobieganie rozjeżdżaniu stron */
+#bodyContent pre {
+        overflow-x: auto;
+        overflow-y: hidden;
+}
+
+/* klasa topalign, żeby umożliwić wyrównanie do góry wszystkich pól tableki */
+table.topalign td, table.topalign th {
+	vertical-align: top;
+}
+/* analogicznie bottomalign i centeralign */
+table.bottomalign td, table.bottomalign th {
+	vertical-align: bottom;
+}
+/* analogicznie bottomalign i middlealign */
+table.middlealign td, table.middlealign th {
+	vertical-align: middle;
+}
+
+.CollapseButton {
+	font-size: x-small;
+	float: right;
+	font-weight: normal;
+	text-align: right;
+	width: 36px;
+}
+
+/* Wyróżnienie klikniętego przypisu w celu ułatwienia nawigacji */
+ol.references li:target,
+sup.reference:target,
+.citation:target { 
+    background-color: #DEF;
+}
+
+/* Klasa dla szablonu {{Główny artykuł}} */
+.detail, .details {
+	margin: 0 0 0.7em 2em;
+	border: 1px solid #e7e7e7;
+	border-width: 1px 0;
+	text-align:left;
+	font-size:95%;
+	background: #fdfdfd;
+	padding:1px 4px;
+	display: table;
+}
+.detail > span {
+	display: table-row;
+}
+.detail > span > span {
+	display: table-cell;
+	padding-left: 4px;
+	width:100%;
+}
+
+/* poprawne wyświetlanie tytułów z indeksami z użyciem szablonu {{małą literą}} */
+.firstHeading {
+	line-height: 1.2em
+}
+
+/* Szablon:Władca */
+table.wladca-box + table.navbox {
+	margin-top: 0;
+}
+table.wladca-box {
+	width: 100%;
+	clear: both;
+	vertical-align: top;
+	text-align: center;
+	font-size: 95%;
+}
+table.wladca-box + table.wladca-box {
+	border-top: 0 !important;
+}
+table.wladca-box td {
+	padding: 2px;
+}
+
+/* Domyślne wartości dla szablonu współrzędnych geograficznych
+   Więcej informacji w szablonie [[Szablon:Koordynaty/Linkuj]].
+   Nazwy klas "geo", "longitude" i "latitude" są używane w mikroformacie
+   geograficznym i nie powinny być zmieniane. */
+.geo-default, .geo-dms, .geo-dec {
+	display: inline;
+}
+.geo-nondefault, .geo-multi-punct {
+	display: none;
+}
+.longitude, .latitude {
+	white-space: nowrap;
+}
+
+/* kosmetyka tagów filtru nadużyć - widoczne na OZ  */
+.mw-tag-marker {
+	font-weight: bold;
+	background-color: #f0fff0;
+}
+.mw-tag-marker-visualeditor,
+.mw-tag-marker-visualeditor-switched,
+.mw-tag-marker-visualeditor-wikitext,
+.mw-tag-marker-discussiontools-reply,
+.mw-tag-marker-discussiontools-newtopic,
+.mw-tag-marker-discussiontools-source,
+.mw-tag-marker-discussiontools-visual,
+.mw-tag-marker-HHVM,
+.mw-tag-marker-massmessage-delivery,
+.mw-tag-marker-mobile_edit,
+.mw-tag-marker-mobile_app_edit,
+.mw-tag-marker-mobile_web_edit,
+.mw-tag-marker-advanced_mobile_edit,
+.mw-tag-marker-android_app_edit,
+.mw-tag-marker-ios_app_edit,
+.mw-tag-marker-gettingstarted_edit {
+	font-weight: normal;
+	background-color: transparent;
+}
+
+/* kolorowanie linków w nagłówkach tabel z kolorowym tłem */
+.linksInherit a {
+	color: inherit;
+}
+
+/* [[:Kategoria:Szablony_Fb]], reszta w [Monobook|Modern].css */
+table.fb-tab  {
+	text-align: center;
+}
+
+/* [[:Kategoria:Szablony_Fb]] */
+table.fb-tab0 { font-size: 100%;    }
+table.fb-tab1 { font-size:  90%;    }
+table.fb-tab2 { font-size:  85%;    }
+table.fb-tab3 { font-size:  80%;    }
+tr.fb-row0 { color: black; background-color: #EEE;  }
+tr.fb-row1 { color: black; background-color: white; }
+td.fb-result-none { background-color: #CCC; width: 30px; }
+td.fb-result-hwin { background-color: #DFE7FF; width: 30px; }
+td.fb-result-gwin { background-color: #FFDFDF; width: 30px;}
+td.fb-result-draw { background-color: #FFF; width: 30px;}
+
+/* Poniższy kawałek może się nie walidować walidatorem W3C */
+/* -moz-* i -webkit-* to rozszerzenia producentów przeglądarek(CSS 2.1 4.1.2.1) */
+/* column-count pochodzi z modułu "CSS Multi-column Layout" w CSS3 */
+/* Zignoruj błędy walidatora spowodowane poniższymi definicjami */
+/* Używana też: .references-1column */
+/* 2017-12-26 wyłączam (Paweł Ziemian)
+.references-2column {
+	-moz-column-count: 2;
+	-webkit-column-count: 2;
+	column-count: 2;
+}
+.references-3column {
+	-moz-column-count: 3;
+	-webkit-column-count: 3;
+	column-count: 3;
+}
+*/
+
+/* stała szerokosć kolumny */
+.mw-references-columns {
+	-ms-column-count: auto;
+	-ms-column-width: 30em;
+	-ms-column-gap: 2em;
+	-moz-column-count: auto;
+	-moz-column-width: 30em;
+	-moz-column-gap: 2em;
+	-webkit-column-count: auto;
+	-webkit-column-width: 30em;
+	-webkit-column-gap: 2em;
+	column-count: auto;
+	column-width: 30em;
+	column-gap: 2em;
+}
+
+/* Pozwala na "numerowanie" uwag kolejnymi literami alfabetu; patrz [[Szablon:Uwagi]] */
+.refsection-uwagi .references,
+.refsection-uwaga .references {
+	list-style-type: lower-alpha;
+}
+/* <nowiki> Wsparcie dla {{Uwagi|=mini}} (uwagi do tabelek itp.) </nowiki> */
+.refsection-mini .references {
+	list-style-type: lower-roman;
+}
+.refsection-mini .mw-cite-backlink {
+	display:none;
+}
+
+/* Miniprzypisy dla [[Szablon:Infobox uwaga]] i kolegów */
+.refsection-infobox .references { 
+	list-style-type: lower-alpha;
+	list-style-position: inside;
+	margin-left: 0;
+}
+
+/* Zapobiega zwiększaniu się wysokości linii z indeksami górnymi i dolnymi */
+#bodyContent sup, #bodyContent sub {
+	line-height: 1em;
+}
+
+/* Nie łamiemy linii w głupich miejscach */
+.nowraplinks a, span.texhtml, sup.reference, sup.reference a {
+	white-space: nowrap;
+}
+
+/* W oknie oznaczania wersji jako przejrzana ukrycie pola komentarza i etykiety pola */
+.fr-comment-box, label[for="mw-fr-commentbox"] {
+	display: none;
+}
+
+/* kosmetyka wersji przejrzanych - likwidacja pogrubienia na OZ  */
+.mw-fr-reviewlink {
+	font-weight: normal;
+}
+
+/* Wikiglob */
+.wikiglob {
+	background:url(//upload.wikimedia.org/wikipedia/commons/3/3e/MP-open-book4.png)
+}
+
+iframe#openstreetmap {
+        height: 350px;
+        width: 100%;
+        clear: both;
+}
+
+* html .IPA {
+	font-family: Quivira, Code2000, Sun-ExtA, "DejaVu Sans", "Gentium Plus", Gentium, "Doulos SIL", Helvetica, "Arial Unicode MS", "Lucida Sans Unicode", sans-serif;
+}
+:first-child ~ html .IPA {
+	font-family: Quivira, Code2000, Sun-ExtA, "DejaVu Sans", "Gentium Plus", Gentium, "Doulos SIL", Helvetica, "Arial Unicode MS", "Lucida Sans Unicode", sans-serif;
+}
+/* Nie podkreślamy linków z szablonu {{IPA}} */
+.IPA a {
+        text-decoration: none;
+}
+
+/* Do wersji oprogramowania */
+td.wersja  { white-space: nowrap; background-color: white; color: black; }
+td.wersja .poprzednia     { background-color: white; }
+td.wersja .biezaca       { background-color: lime; }
+td.wersja .testowa       { background-color: palegreen; }
+td.wersja .zapowiedziana { background-color: lightyellow; }
+
+
+/* Style dla narzędzi edycyjnych pod polem edycji, patrz [[MediaWiki:Edittools]] */
+#plwiki-edittools {
+	margin-top: 1px;
+	border: 1px dotted #a2a9b1;
+	padding: 2px;
+	font-size: 95%;
+}
+#plwiki-edittools .plwiki-edittools-section p {
+	margin: 0;
+}
+
+/* przypisy w navboxach */
+.refsection-nav .references {
+    list-style-type: upper-alpha;
+    font-size: 95%;
+}
+.refsection-nav .mw-cite-backlink {
+    display:none;
+}
+.navbox .hlist .refsection-nav ol.references > li:before {
+    content: "[" counter(list-item, upper-latin) "] ";
+}
+
+/* wyłącz kursywę w szablonach cytowania */
+cite.citation { font-style: inherit; }
+
+/* Wsparcie dla Szablon:Cytuj */
+.citation i>em  { font-style: normal; }
+.cite-name-before { display:none!important; }
+.cite-name-after { display:inline!important;}
+.cite-name-full { display:none!important; }
+.cite-name-initials { display:inline!important; }
+.references .cite-name-before { display:inline!important; }
+.references .cite-name-after { display:none!important; }
+.references .cite-name-full { display:inline!important; }
+.references .cite-name-initials { display:none!important; }
+.cite-at-al { display:inline!important; }
+.citation.pmid .issn, .citation.doi .issn, .citation.pmc .issn, .citation.nourl .accessdate { display: none; }
+
+/* ikonki typu dostępu w szablonach cytowania */
+.citation.open-access::before,
+.citation.closed-access::before,
+.citation.registered-access::before,
+.citation.limited-access::before {
+	content: "";
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-right: 1em;
+}
+.citation.open-access::before {
+	background-image: url("//upload.wikimedia.org/wikipedia/commons/thumb/9/91/Open_Access_logo_green_alt2.svg/8px-Open_Access_logo_green_alt2.svg.png");
+}
+.citation.closed-access::before {
+	background-image: url("//upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Closed_Access_logo_alternative.svg/8px-Closed_Access_logo_alternative.svg.png");
+}
+.citation.registered-access::before {
+	background-image: url("//upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Lock-blue-alt-2.svg/8px-Lock-blue-alt-2.svg.png");
+}
+.citation.limited-access::before {
+	background-image: url("//upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Lock-blue-alt-2.svg/8px-Lock-blue-alt-2.svg.png");
+}
+
+/* T156351: Support for Parsoid's Cite implementation */
+span[ rel="mw:referencedBy" ] {
+    counter-reset: mw-ref-linkback 0;
+}
+span[ rel="mw:referencedBy" ] > a::before {
+    content: counter( mw-ref-linkback, lower-alpha );
+}
+.mw-ref > a[data-mw-group=infobox]::after {
+    content: '[' counter( mw-Ref, lower-alpha ) ']';
+}
+.mw-ref > a[data-mw-group=nav]::after {
+    content: '[' counter( mw-Ref, upper-alpha ) ']';
+}
+.mw-ref > a[data-mw-group=uwaga]::after {
+    content: '[' counter( mw-Ref, lower-alpha ) ']';
+}
+.mw-ref > a[data-mw-group=mini]::after {
+    content: '[' counter( mw-Ref, lower-roman ) ']';
+}
+
+/* Odpowiedzi na stronach FAQ i podobnych */
+.faq {
+	padding: 0 1em 1em;
+}
+
+/* Zawartość niewyświetlana na komputerach */
+.nodesktop {
+    display: none;
+}
+
+/* Styl dla klasy "tree" dla listy z coraz większym wcięciem. Używany w {{s|język infobox}} w polu "Klasyfikacja genetyczna" */
+
+.tree ul { margin-left: 0px; list-style-position: inside; }
+.tree li { padding-left: 5.0em; }
+.tree li:nth-child(0) { padding-left: 0.0em; }
+.tree li:nth-child(1) { padding-left: 0.5em; }
+.tree li:nth-child(2) { padding-left: 1.0em; }
+.tree li:nth-child(3) { padding-left: 1.5em; }
+.tree li:nth-child(4) { padding-left: 2.0em; }
+.tree li:nth-child(5) { padding-left: 2.5em; }
+.tree li:nth-child(6) { padding-left: 3.0em; }
+.tree li:nth-child(7) { padding-left: 3.5em; }
+.tree li:nth-child(8) { padding-left: 4.0em; }
+.tree li:nth-child(9) { padding-left: 4.5em; }
+
+/* Link do Wikidanych z infoboksu. Używany w {{s|język infobox}} w tytułach pól */
+.wdlink {
+	display: none;
+}
+
+/* Personae na stronach pomocy i dokumentacji */
+.hidefor-loggedout { display: none }
+.hidefor-loggedin { display: inline }
+.hidefor-autoconfirmed { display: inline }
+.hidefor-editor { display: inline }
+.hidefor-sysop { display: inline }
+
+/* Centralna nawigacja metastron */
+.global-nav a:hover,
+.global-nav a:focus {
+	text-decoration: none;
+}
+
+table.global-nav {
+	border-spacing: 20px 0;
+}
+
+.global-nav td:hover,
+.global-nav td:focus {
+	border: #0645AD solid !important;
+	border-width: 0 0 3px 0 !important;
+	border-radius: 2px !important;
+	background-color: #E5EDFB !important;
+}
+
+.global-nav a {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* Informacja w [[Szablon:Literatura-lista]] */
+.literatura-lista { 
+	border-bottom: 1px #a2a9b1 solid;
+}
+.literatura-lista-i { 
+	font-style: italic;
+	margin-left: 1.6em;
+}
+
+/* [[Szablon:Lang]] */
+.lang-list abbr {
+	text-decoration: none!important;
+	border-bottom:0;
+}
+
+/* wyszarzanie nieprawidłowych i nieusprawiedliwionych numerów ISBN */
+.isbn-incorrect, .isbn-invalid {
+	color: #888;
+}
+
+.isbn, .issn a {
+	white-space: nowrap;
+}
+
+/* wyłączanie zaznaczania tekstu, używaj rozsądnie */
+.disabled-user-selection {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* wyrównywanie do prawej kolumn w tabelkach */
+.col-1-text-align-right>tbody>tr>:nth-child(1){text-align: right;}
+.col-2-text-align-right>tbody>tr>:nth-child(2){text-align: right;}
+.col-3-text-align-right>tbody>tr>:nth-child(3){text-align: right;}
+.col-4-text-align-right>tbody>tr>:nth-child(4){text-align: right;}
+.col-5-text-align-right>tbody>tr>:nth-child(5){text-align: right;}
+.col-6-text-align-right>tbody>tr>:nth-child(6){text-align: right;}
+.col-7-text-align-right>tbody>tr>:nth-child(7){text-align: right;}
+.col-8-text-align-right>tbody>tr>:nth-child(8){text-align: right;}
+.col-9-text-align-right>tbody>tr>:nth-child(9){text-align: right;}
+
+/* wizualny separator między sąsiednimi wywołaniami [[Szablon:Mecz piłarski]] */
+.mecz-pilkarski+.mecz-pilkarski{border-top: 1px solid #F5F5F5;}
+
+/* Ukrycie przycisków do oznaczania stron */
+/* https://pl.wikipedia.org/w/index.php?oldid=58546385#Strony_testowe_dla_newbie_w_systemie_wersji_przejrzanych */
+body[class*=" page-Pomoc_Krok_"] #mw-fr-reviewform,
+body[class*=" page-Pomoc_Krok_"] #mw-fr-revisiontag
+{ display: none; }
+
+/* Domyślny stan problemów. Zobacz: [[MediaWiki:Gadget-sprawdz-problemy-szablony.css]] */
+.problemy { display: none; }

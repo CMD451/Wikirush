@@ -1,7 +1,7 @@
 
 from channels.db import database_sync_to_async
 from websocket.models import Member,Lobby
-from websocket.serializers import MemberSerializer
+from websocket.serializers import MemberSerializer,LobbySettingsSerializer
 
 @database_sync_to_async
 def is_lobby_none(lobby_name):
@@ -82,3 +82,11 @@ def get_oldest_lobby_member(lobby):
 @database_sync_to_async
 def get_lobby_members_count(lobby):
     return len(lobby.members.all())
+
+@database_sync_to_async
+def update_lobby_settings(lobby_name,json_data):
+    lobby = get_lobby_sync(lobby_name)
+    serializer = LobbySettingsSerializer(data=json_data,instance=lobby)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+    return serializer.data

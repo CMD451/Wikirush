@@ -1,10 +1,8 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-
+import { SettingsForm } from './SettingsForm';
 
 export function SettingsPanel(props) {
-    //const [settings,setSettings] = {}
-
     function onInviteButtonClick(e){
         e.preventDefault();
         navigator.clipboard.writeText(window.location.href)
@@ -19,6 +17,7 @@ export function SettingsPanel(props) {
                         </div>
                     </div>
                     <div className="settings box-shadow">
+                        <SettingsForm settings={props.settings} onChange={props.onChange}/>
                     </div>
                 </div>
         </div>

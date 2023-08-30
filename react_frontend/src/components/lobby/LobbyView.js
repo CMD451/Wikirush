@@ -16,24 +16,38 @@ export function LobbyView(props) {
     const [ownerPk, setOwnerPk] = useState([0]);
     const [ownerToken, setOwnerToken] = useState([""]);
     const [currentUser, setCurrentUser] = useState(user)
+    const [settings,setSettings] = useState({
+        startArticle:"Pet_door",
+        endArticle:"Berlin",
+        lang:"en"
+    })
     //const [isOwner] = useIsOwner(currentUser,ownerPk)
     let isOwner = ownerPk == currentUser.pk
     let isFirstRender = useRef(true);
 
 
+    function handleSettingsChange(newSettings){
+        //maybe update owner settings directly with newSettings
+        WebSocketInstance.sendMessage(
+            {
+                action:"settings_change",
+                content:newSettings,
+                owner_token:ownerToken
+            }
+        )
+    }
+
     const [currentContent, setCurrentContent] = useState("menu")
     let content = {
         menu: (
             <React.Fragment>
-                <SettingsPanel OnStartButtonClick={sendStartGameAction} isOwner={isOwner}   />
+                <SettingsPanel settings={settings} onChange={handleSettingsChange} OnStartButtonClick={sendStartGameAction} isOwner={isOwner}   />
                 <PlayerList players={players} currentPlayer={currentUser} ownerPk={ownerPk} />
             </React.Fragment>
         ),
         game: (
-            <Game/>
+            <Game endArticle={settings['endArticle']} startUrl={settings['startArticle']}  lang={settings['lang']}/>
         )
-        
-        
     }
 
     function sendStartGameAction(){
@@ -78,6 +92,10 @@ export function LobbyView(props) {
                 case 'start_game':
                     alert("Starting the game")
                     setCurrentContent("game")
+                    break;
+                case 'settings_change':
+                    setSettings(data['content'])
+
             }
         })
     }

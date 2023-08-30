@@ -5,6 +5,9 @@ import { AvatarPicker } from './AvatarPicker';
 import { UsernameInput } from './UsernameInput';
 import avatar from "../../assets/img/avatars/avatar.png"
 
+
+import { wikipageRequest } from '../../lookup/lookup';
+
 export function JoinLobbyView(props) {
 
     const [username,setUsername] = useState("")

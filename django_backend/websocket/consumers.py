@@ -56,6 +56,8 @@ class GameConsumer(AsyncWebsocketConsumer):
             "content":serialized_member}
         )
       
+    async def is_owner(self,json_data):
+        return json_data['owner_token'] == await get_lobbyOwnerToken(self.room_name) 
     async def designate_new_owner(self,new_owner):
         await self.channel_layer.group_send(
             self.room_group_name,
@@ -85,8 +87,10 @@ class GameConsumer(AsyncWebsocketConsumer):
         
 
     async def start_game_action(self,json_data):
-        if json_data['owner_token'] != await get_lobbyOwnerToken(self.room_name):
+        if not await self.is_owner(json_data):
             return
+        # if json_data['owner_token'] != await get_lobbyOwnerToken(self.room_name):
+        #     return
         await self.channel_layer.group_send(
              self.room_group_name,
              {
@@ -96,11 +100,28 @@ class GameConsumer(AsyncWebsocketConsumer):
         )
          
 
+    async def settings_change_action(self,json_data):
+        if not await self.is_owner(json_data):
+            return
+        settings = None
+        try:
+            settings = await update_lobby_settings(self.room_name,json_data['content'])
+        except:
+            return
+        await self.channel_layer.group_send(
+             self.room_group_name,
+             {
+                  "type":"settings_change",
+                  "content":settings
+             }
+        )
+
     actions = {
           'user_join':user_joined_action,
           'user_left':user_left_action,
           'fetch_members':fetch_members,
-          'start_game':start_game_action
+          'start_game':start_game_action,
+          'settings_change':settings_change_action
     }
     async def disconnect(self, close_code):
         await self.actions['user_left'](self)
@@ -140,5 +161,8 @@ class GameConsumer(AsyncWebsocketConsumer):
             await self.standard_message_send(event)
             
     async def start_game(self,event):
+        await self.standard_message_send(event)
+
+    async def settings_change(self,event):
         await self.standard_message_send(event)
             

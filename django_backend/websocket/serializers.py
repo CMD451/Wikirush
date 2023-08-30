@@ -11,11 +11,20 @@ class MemberSerializer(serializers.ModelSerializer):
         model = Member
         fields = ['username','avatarUrl','lobby','pk']
 
-class Lobby(serializers.ModelSerializer):
+class LobbySerializer(serializers.ModelSerializer):
     members = MemberSerializer(many=True,read_only = True)
     class Meta:
         model = Lobby
         fields = ['uri']
+
+class LobbySettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lobby
+        fields = [
+            'startArticle',
+            'endArticle',
+            'lang'
+                  ]
 
 
 

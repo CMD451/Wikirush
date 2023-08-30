@@ -1,34 +1,26 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { JoinLobbyView } from '../joinView/JoinLobbyView';
-
+import { Wikipage } from '../game/Wikipage';
+import { Hud } from '../game/Hud';
 
 export function Game(props) {
-    let iframeW = React.createRef();
-   
-    function handleStuff(e){
-        console.log(iframeW)
-        console.log("ua")
-        //console.log(iframeW.window.locatio)
-        console.log(iframeW.current.url)
-        console.log(iframeW.current.contentWindow.location)
-        console.log(iframeW.current.accessKey)
+    const [currentUrl,setCurrentUrl] = useState(props.startUrl);
+
+    function onUrlChange(url){
+        if(url == props.endArticle){
+            alert("!!!")
+        }
+        setCurrentUrl(url);
     }
 
     return (
-        <React.Fragment>
-
-        <button onClick={handleStuff}> do stuff</button>
-        <iframe ref={iframeW} onLoad={alert("HALO GALO")} src="https://pl.wikipedia.org/wiki/Przyj%C4%99cie" width="100%" title="W3Schools Free Online Web Tutorials"  ></iframe>
-
-        </React.Fragment>
-    ); 
-
-
-
-
-
-
-
+        
+        <div className='game-container'>
+            <Hud endArticle={props.endArticle}/>
+            <div className='wikipage-container'>
+                <Wikipage lang={props.lang} page={currentUrl} onUrlChange={onUrlChange}/>
+            </div>
+        </div>
+    );
 }
 
