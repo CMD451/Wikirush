@@ -6,6 +6,8 @@ import WebSocketInstance from '../../websocket/websocket';
 import { PlayerList } from '../lobby/PlayerList'
 import { SettingsPanel } from './SettingsPanel';
 import {useIsOwner} from './hooks/useIsOwner'
+import { FullScreenLoading } from '../util/FullScreenLoading';
+import { LobbyUnavailable } from './LobbyUnavailable';
 import { Game } from './Game';
 import '../../styles/game.css'
 
@@ -37,7 +39,7 @@ export function LobbyView(props) {
         )
     }
 
-    const [currentContent, setCurrentContent] = useState("menu")
+    const [currentContent, setCurrentContent] = useState("loading")
     let content = {
         menu: (
             <React.Fragment>
@@ -47,6 +49,12 @@ export function LobbyView(props) {
         ),
         game: (
             <Game endArticle={settings['endArticle']} startUrl={settings['startArticle']}  lang={settings['lang']}/>
+        ),
+        unavailable:(
+            <LobbyUnavailable/>
+        ),
+        loading:(
+            <FullScreenLoading/>
         )
     }
 
@@ -73,6 +81,7 @@ export function LobbyView(props) {
                 case "user_first_connection":
                     setCurrentUser(data['content']['member'])
                     setOwnerPk(data['content']['owner_pk'])
+                    setCurrentContent("menu")
                     break;
                 case "user_join":
                     setPlayers(players => [...players, data['content']])
@@ -95,6 +104,11 @@ export function LobbyView(props) {
                     break;
                 case 'settings_change':
                     setSettings(data['content'])
+                    break;
+                case 'lobby_unavailable':
+                    WebSocketInstance.disconnect()
+                    setCurrentContent('unavailable')
+                    break;
 
             }
         })
@@ -104,7 +118,7 @@ export function LobbyView(props) {
         setCallbacks();
     })
     useEffect(() => {
-        WebSocketInstance.connect("chledb22");
+        WebSocketInstance.connect("wasdwasdwasdwasdwasdwasdwasdwasdwasdwasdwasdwasdwasdawsd");
     }, [])
     useEffect(() => {
         if (isFirstRender) {

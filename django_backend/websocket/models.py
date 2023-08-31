@@ -11,6 +11,7 @@ class Lobby(models.Model):
     creationTimestamp = models.DateTimeField(auto_now_add=True)
     #change default
     lobbyOwnerToken = models.TextField(max_length = 50,default="0000000")
+    started = models.BooleanField(default=False)
     startArticle = models.TextField(default="Pet_door")
     endArticle = models.TextField(default="Pet")
     lang = models.TextField(default="en")

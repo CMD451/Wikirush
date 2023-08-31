@@ -27,14 +27,23 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'content':await get_lobbyOwnerToken(self.room_name)
             }))
 
+    async def send_lobby_unavailable_message(self):
+        await self.send(text_data=json.dumps({
+            'action':'lobby_unavailable'
+        }))
+
     async def user_joined_action(self,json_data):
+        lobby = await get_lobby(self.room_name)
+        if await did_lobby_start(lobby):
+            await self.send_lobby_unavailable_message()
+            return
+
         member = None
         try:
             member = await create_member(json_data['member'],await get_lobby(self.room_name))
         except:
             return
         self.member_pk = member.pk
-        lobby = await get_lobby(self.room_name)
         owner = await get_owner_create_if_none(lobby,member)
         if owner.pk == member.pk:
             await self.designate_as_owner()
@@ -89,8 +98,11 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def start_game_action(self,json_data):
         if not await self.is_owner(json_data):
             return
-        # if json_data['owner_token'] != await get_lobbyOwnerToken(self.room_name):
-        #     return
+        
+        #check if lobby already started
+        lobby = await get_lobby(self.room_name)
+        await db_lobby_start(lobby)
+
         await self.channel_layer.group_send(
              self.room_group_name,
              {

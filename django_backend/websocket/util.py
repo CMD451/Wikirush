@@ -61,8 +61,10 @@ def create_member(member_data,lobby):
 
 @database_sync_to_async
 def remove_member(member_pk,lobby_name):
-    Member.objects.get(lobby__uri=lobby_name,pk=member_pk).delete()
-
+    user = Member.objects.get(lobby__uri=lobby_name,pk=member_pk)
+    if user != None:
+        user.delete()
+    
 def fetch_lobby_members(lobby_name):
     return Member.objects.filter(lobby__uri=lobby_name)
 
@@ -90,3 +92,14 @@ def update_lobby_settings(lobby_name,json_data):
     if serializer.is_valid(raise_exception=True):
         serializer.save()
     return serializer.data
+
+@database_sync_to_async
+def did_lobby_start(lobby):
+    return lobby.started
+
+@database_sync_to_async
+def db_lobby_start(lobby):
+    lobby.started = True
+    lobby.save()
+
+
