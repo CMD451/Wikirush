@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from websocket.models import Member,Lobby
+from websocket.models import Member,Lobby,PageVisit
 
 
 
@@ -25,6 +25,11 @@ class LobbySettingsSerializer(serializers.ModelSerializer):
             'endArticle',
             'lang'
                   ]
+        
+class PageVisitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PageVisit
+        fields = ['lobby','member','article','time']
 
 
 

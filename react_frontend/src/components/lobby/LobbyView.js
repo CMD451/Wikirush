@@ -15,8 +15,10 @@ import '../../styles/game.css'
 export function LobbyView(props) {
     const { user, setUser } = React.useContext(UserContext);
     const [players, setPlayers] = useState([]);
+    //change ownerPk,ownerToken to ref
     const [ownerPk, setOwnerPk] = useState([0]);
     const [ownerToken, setOwnerToken] = useState([""]);
+
     const [currentUser, setCurrentUser] = useState(user)
     const [settings,setSettings] = useState({
         startArticle:"Pet_door",
@@ -48,7 +50,7 @@ export function LobbyView(props) {
             </React.Fragment>
         ),
         game: (
-            <Game endArticle={settings['endArticle']} startUrl={settings['startArticle']}  lang={settings['lang']}/>
+            <Game endArticle={settings['endArticle']} startUrl={settings['startArticle']}  onPageVisit={sendPageVisitAction}  lang={settings['lang']}/>
         ),
         unavailable:(
             <LobbyUnavailable/>
@@ -66,7 +68,18 @@ export function LobbyView(props) {
             }
         )
     }
-
+    function sendPageVisitAction(articleName,userTime){
+        WebSocketInstance.sendMessage(
+            {
+                action:"page_visit",
+                content:{
+                    article:articleName,
+                    time:userTime
+                    
+                }
+            }
+        )
+    }
     function setCallbacks() {
         WebSocketInstance.setOnOpenCallback(() => {
             WebSocketInstance.sendMessage(
@@ -118,7 +131,7 @@ export function LobbyView(props) {
         setCallbacks();
     })
     useEffect(() => {
-        WebSocketInstance.connect("wasdwasdwasdwasdwasdwasdwasdwasdwasdwasdwasdwasdwasdawsd");
+        WebSocketInstance.connect(props.uri);
     }, [])
     useEffect(() => {
         if (isFirstRender) {

@@ -28,3 +28,8 @@ class Member(models.Model):
     avatarUrl = models.CharField(max_length=50)
     lobby = models.ForeignKey(Lobby,on_delete=models.CASCADE,related_name="members")
 
+class PageVisit(models.Model):
+    article = models.TextField(blank=True)
+    member = models.ForeignKey("Member",on_delete=models.CASCADE,related_name="visitedPages")
+    lobby = models.ForeignKey("lobby",on_delete=models.CASCADE)
+    time = models.FloatField()

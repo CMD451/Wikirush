@@ -128,12 +128,21 @@ class GameConsumer(AsyncWebsocketConsumer):
              }
         )
 
+    async def page_visit_action(self,json_data):
+        lobby = await get_lobby(self.room_name)
+
+        json_data['content']['lobby'] = lobby.pk
+        json_data['content']['member'] = self.member_pk
+        await add_wiki_visit(json_data['content'])
+        
+
     actions = {
           'user_join':user_joined_action,
           'user_left':user_left_action,
           'fetch_members':fetch_members,
           'start_game':start_game_action,
-          'settings_change':settings_change_action
+          'settings_change':settings_change_action,
+          'page_visit':page_visit_action
     }
     async def disconnect(self, close_code):
         await self.actions['user_left'](self)

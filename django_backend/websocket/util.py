@@ -1,7 +1,7 @@
 
 from channels.db import database_sync_to_async
 from websocket.models import Member,Lobby
-from websocket.serializers import MemberSerializer,LobbySettingsSerializer
+from websocket.serializers import MemberSerializer,LobbySettingsSerializer,PageVisitSerializer
 
 @database_sync_to_async
 def is_lobby_none(lobby_name):
@@ -102,4 +102,12 @@ def db_lobby_start(lobby):
     lobby.started = True
     lobby.save()
 
+@database_sync_to_async 
+def add_wiki_visit(data):
+    serializer = PageVisitSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return
+    print(serializer.errors)
+    
 
