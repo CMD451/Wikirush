@@ -25,11 +25,5 @@ export function Hud(props) {
         </div>
     );
 
-
-
-
-
-
-
 }
 

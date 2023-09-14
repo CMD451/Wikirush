@@ -8,10 +8,12 @@ export function Game(props) {
     const userTime = useRef(0.00)
 
     function onUrlChange(url){
+        setCurrentUrl(url);
         if(url == props.endArticle){
             alert("!!!")
+            props.onGoalReached(url,userTime.current)
+            return
         }
-        setCurrentUrl(url);
         props.onPageVisit(url,userTime.current)
     }
 

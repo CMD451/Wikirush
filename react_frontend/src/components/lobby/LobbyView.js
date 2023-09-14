@@ -5,6 +5,7 @@ import { UserContext } from '../Hub.js/Hub';
 import WebSocketInstance from '../../websocket/websocket';
 import { PlayerList } from '../lobby/PlayerList'
 import { SettingsPanel } from './SettingsPanel';
+import { ResultsPanel } from './ResultsPanel';
 import {useIsOwner} from './hooks/useIsOwner'
 import { FullScreenLoading } from '../util/FullScreenLoading';
 import { LobbyUnavailable } from './LobbyUnavailable';
@@ -50,13 +51,19 @@ export function LobbyView(props) {
             </React.Fragment>
         ),
         game: (
-            <Game endArticle={settings['endArticle']} startUrl={settings['startArticle']}  onPageVisit={sendPageVisitAction}  lang={settings['lang']}/>
+            <Game endArticle={settings['endArticle']} startUrl={settings['startArticle']}  onPageVisit={sendPageVisitAction} onGoalReached={sendGoalReachedAction}  lang={settings['lang']}/>
         ),
         unavailable:(
             <LobbyUnavailable/>
         ),
         loading:(
             <FullScreenLoading/>
+        ),
+        results:(
+            <React.Fragment>
+                <ResultsPanel/>
+                <PlayerList players={players} currentPlayer={currentUser} ownerPk={ownerPk} />
+            </React.Fragment>
         )
     }
 
@@ -76,6 +83,17 @@ export function LobbyView(props) {
                     article:articleName,
                     time:userTime
                     
+                }
+            }
+        )
+    }
+    function sendGoalReachedAction(articleName,userTime){
+        WebSocketInstance.sendMessage(
+            {
+                action:"end_article_reached",
+                content:{
+                    article:articleName,
+                    time:userTime
                 }
             }
         )
@@ -121,6 +139,15 @@ export function LobbyView(props) {
                 case 'lobby_unavailable':
                     WebSocketInstance.disconnect()
                     setCurrentContent('unavailable')
+                    break;
+                case 'end_article_reached':
+                    if(data['content'] != currentUser.pk){
+                        alert("End article reached")
+                    }
+                    break;
+                case 'end_game':
+                    console.log(data);
+                    setCurrentContent('results')
                     break;
 
             }
