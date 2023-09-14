@@ -5,6 +5,7 @@ import json
 from websocket.util import *
 from websocket.models import Member,Lobby
 from websocket.serializers import MemberSerializer
+import asyncio
 
 
 
@@ -135,6 +136,30 @@ class GameConsumer(AsyncWebsocketConsumer):
         json_data['content']['member'] = self.member_pk
         await add_wiki_visit(json_data['content'])
         
+    async def end_game_action(self,time):
+        await asyncio.sleep(time)
+
+        lobby = await get_lobby(self.room_name)
+
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                "type":"end_game",
+                "content":await get_end_game_results(lobby)
+            }
+    )
+
+    async def end_article_reached_action(self,json_data):
+        await self.actions['page_visit'](self,json_data)
+        await self.channel_layer.group_send(
+             self.room_group_name,
+             {
+                  "type":"end_article_reached",
+                  "content":self.member_pk
+             }
+        )
+        await self.end_game_action(10)
+
 
     actions = {
           'user_join':user_joined_action,
@@ -142,7 +167,8 @@ class GameConsumer(AsyncWebsocketConsumer):
           'fetch_members':fetch_members,
           'start_game':start_game_action,
           'settings_change':settings_change_action,
-          'page_visit':page_visit_action
+          'page_visit':page_visit_action,
+          'end_article_reached':end_article_reached_action
     }
     async def disconnect(self, close_code):
         await self.actions['user_left'](self)
@@ -186,4 +212,11 @@ class GameConsumer(AsyncWebsocketConsumer):
 
     async def settings_change(self,event):
         await self.standard_message_send(event)
+
+    async def end_article_reached(self,event):
+        await self.standard_message_send(event)
+
+    async def end_game(self,event):
+        await self.standard_message_send(event)
+        
             

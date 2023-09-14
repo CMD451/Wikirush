@@ -1,56 +1,53 @@
+
 import React from 'react';
 import { useEffect, useState } from "react";
-import { JoinLobbyView } from '../joinView/JoinLobbyView';
-
-
-import Select from 'react-select'
-import Async, { useAsync } from 'react-select/async';
 import AsyncSelect from 'react-select/async';
-
-
 import { searchForArticle } from '../../lookup/lookup';
+var debounce = require('debounce-promise')
 export function ArticleSearch(props) {
-    const [articleOptions,setArticleOptions] = useState([])
-    const [value,setValue] = useState()
-   
+    const [articleOptions, setArticleOptions] = useState([])
+    const [value, setValue] = useState()
 
-    async function onCurrentArticleChange(value,action){
-        if((action['action'] == 'select-option')&&('onArticleChange' in props)){
+
+    async function onCurrentArticleChange(value, action) {
+        if ((action['action'] == 'select-option') && ('onArticleChange' in props)) {
             //setValue(value)
-            props.onArticleChange(value['label'].replaceAll(" ","_"))
-            }
+            props.onArticleChange(value['label'].replaceAll(" ", "_"))
         }
-    async function loadOptions(input){
-        if(input.length >= 2)
-            await searchArticles(input)
-            return articleOptions
+    }
+    async function loadOptions(input) {
+        console.log(input)
+        if (input.length >= 2)
+            return await searchArticles(input)
     }
 
-    async function searchArticles(articleName){
+    //debounce to prevent making multiple unnecessary queries
+    const loadOptionsDebounced = debounce(loadOptions, 600)
+
+    async function searchArticles(articleName) {
         let lang = props.settings['lang']
-        searchForArticle(articleName,lang)
-        .then((response)=>{
-            setArticleOptions(response.body.query.search.map((element)=>{
-                return {
-                    value:element.pageid,
-                    label:element.title
-                }
-            }))
-        })
+
+        let response = await searchForArticle(articleName, lang)
+        return response.body.query.search.map((element) => {
+                        return {
+                            value: element.pageid,
+                            label: element.title
+                        }
+                    })
     }
 
     const styles = {
-        option : styles => ({...styles,color:'black'})
+        option: styles => ({ ...styles, color: 'black' })
     }
     return (
-       
+
         <div>
             Artykuł:
             <AsyncSelect
-                value={value}
+                // value={value}
                 cacheOptions
                 onChange={onCurrentArticleChange}
-                loadOptions={loadOptions}
+                loadOptions={loadOptionsDebounced}
                 styles={styles}
             />
         </div>
