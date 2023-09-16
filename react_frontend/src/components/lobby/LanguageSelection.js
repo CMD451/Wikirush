@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 
 export function LanguageSelection(props) {
-    const [value,setValue] = useState("en")
+    const [value,setValue] = useState(props.value)
     function handleOnChange(e){
         setValue(e.target.value)
         if("onChange" in props){
@@ -13,7 +13,7 @@ export function LanguageSelection(props) {
     return (
 
         <React.Fragment>
-            <select value={value} onChange={handleOnChange} >
+            <select disabled={props.isDisabled} value={value} onChange={handleOnChange} >
                 <option value="en">English</option>
                 <option value="pl">Polish</option>
                 <option value="de">German</option>

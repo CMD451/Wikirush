@@ -40,11 +40,11 @@ export function ArticleSearch(props) {
         option: styles => ({ ...styles, color: 'black' })
     }
     return (
-
         <div>
             Artykuł:
             <AsyncSelect
-                // value={value}
+                isDisabled={props.isDisabled}
+                value={props.value}
                 cacheOptions
                 onChange={onCurrentArticleChange}
                 loadOptions={loadOptionsDebounced}

@@ -158,7 +158,7 @@ class GameConsumer(AsyncWebsocketConsumer):
                   "content":self.member_pk
              }
         )
-        await self.end_game_action(10)
+        await self.end_game_action(await get_lobby_end_timer)
 
 
     actions = {

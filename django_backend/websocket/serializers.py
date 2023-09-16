@@ -23,7 +23,8 @@ class LobbySettingsSerializer(serializers.ModelSerializer):
         fields = [
             'startArticle',
             'endArticle',
-            'lang'
+            'lang',
+            'endTimer'
                   ]
         
 class PageVisitSerializer(serializers.ModelSerializer):

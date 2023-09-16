@@ -6,7 +6,7 @@ import WebSocketInstance from '../../websocket/websocket';
 import { PlayerList } from '../lobby/PlayerList'
 import { SettingsPanel } from './SettingsPanel';
 import { ResultsPanel } from './ResultsPanel';
-import {useIsOwner} from './hooks/useIsOwner'
+import { useIsOwner } from './hooks/useIsOwner'
 import { FullScreenLoading } from '../util/FullScreenLoading';
 import { LobbyUnavailable } from './LobbyUnavailable';
 import { Game } from './Game';
@@ -19,25 +19,27 @@ export function LobbyView(props) {
     //change ownerPk,ownerToken to ref
     const [ownerPk, setOwnerPk] = useState([0]);
     const [ownerToken, setOwnerToken] = useState([""]);
+    const [results, setResults] = useState(null)
 
     const [currentUser, setCurrentUser] = useState(user)
-    const [settings,setSettings] = useState({
-        startArticle:"Pet_door",
-        endArticle:"Berlin",
-        lang:"en"
+    const [settings, setSettings] = useState({
+        startArticle: "Pet_door",
+        endArticle: "Berlin",
+        lang: "en",
+        endTimer:30
     })
     //const [isOwner] = useIsOwner(currentUser,ownerPk)
     let isOwner = ownerPk == currentUser.pk
     let isFirstRender = useRef(true);
 
 
-    function handleSettingsChange(newSettings){
+    function handleSettingsChange(newSettings) {
         //maybe update owner settings directly with newSettings
         WebSocketInstance.sendMessage(
             {
-                action:"settings_change",
-                content:newSettings,
-                owner_token:ownerToken
+                action: "settings_change",
+                content: newSettings,
+                owner_token: ownerToken,
             }
         )
     }
@@ -46,54 +48,54 @@ export function LobbyView(props) {
     let content = {
         menu: (
             <React.Fragment>
-                <SettingsPanel settings={settings} onChange={handleSettingsChange} OnStartButtonClick={sendStartGameAction} isOwner={isOwner}   />
+                <SettingsPanel settings={settings} onChange={handleSettingsChange} OnStartButtonClick={sendStartGameAction} isOwner={isOwner} />
                 <PlayerList players={players} currentPlayer={currentUser} ownerPk={ownerPk} />
             </React.Fragment>
         ),
         game: (
-            <Game endArticle={settings['endArticle']} startUrl={settings['startArticle']}  onPageVisit={sendPageVisitAction} onGoalReached={sendGoalReachedAction}  lang={settings['lang']}/>
+            <Game endArticle={settings['endArticle']} startUrl={settings['startArticle']} onPageVisit={sendPageVisitAction} onGoalReached={sendGoalReachedAction} lang={settings['lang']} />
         ),
-        unavailable:(
-            <LobbyUnavailable/>
+        unavailable: (
+            <LobbyUnavailable />
         ),
-        loading:(
-            <FullScreenLoading/>
+        loading: (
+            <FullScreenLoading />
         ),
-        results:(
+        results: (
             <React.Fragment>
-                <ResultsPanel/>
+                <ResultsPanel results={results} />
                 <PlayerList players={players} currentPlayer={currentUser} ownerPk={ownerPk} />
             </React.Fragment>
         )
     }
 
-    function sendStartGameAction(){
+    function sendStartGameAction() {
         WebSocketInstance.sendMessage(
             {
-                action:"start_game",
-                owner_token:ownerToken
+                action: "start_game",
+                owner_token: ownerToken
             }
         )
     }
-    function sendPageVisitAction(articleName,userTime){
+    function sendPageVisitAction(articleName, userTime) {
         WebSocketInstance.sendMessage(
             {
-                action:"page_visit",
-                content:{
-                    article:articleName,
-                    time:userTime
-                    
+                action: "page_visit",
+                content: {
+                    article: articleName,
+                    time: userTime
+
                 }
             }
         )
     }
-    function sendGoalReachedAction(articleName,userTime){
+    function sendGoalReachedAction(articleName, userTime) {
         WebSocketInstance.sendMessage(
             {
-                action:"end_article_reached",
-                content:{
-                    article:articleName,
-                    time:userTime
+                action: "end_article_reached",
+                content: {
+                    article: articleName,
+                    time: userTime
                 }
             }
         )
@@ -141,12 +143,35 @@ export function LobbyView(props) {
                     setCurrentContent('unavailable')
                     break;
                 case 'end_article_reached':
-                    if(data['content'] != currentUser.pk){
+                    if (data['content'] != currentUser.pk) {
                         alert("End article reached")
                     }
                     break;
                 case 'end_game':
                     console.log(data);
+                    resultData = data['content']['members'].map((member) => {
+                        let score = NaN
+                        member['visitedPages'].every(page => {
+                            if (page['article'] == settings['endArticle']) {
+                                score = page['time']
+                                return false
+                            }
+                            return true
+                        });
+                        member['score'] = score
+                    })
+
+                    resultData.sort((a, b) => {
+                        if (a['score'] > b['score']) {
+                            return 1;
+                        }
+                        else if (b['score'] > a['score']) {
+                            return -1;
+                        }
+                        return 0
+                    })
+
+                    setResults(resultData)
                     setCurrentContent('results')
                     break;
 

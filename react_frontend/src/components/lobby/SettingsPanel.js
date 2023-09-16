@@ -17,7 +17,7 @@ export function SettingsPanel(props) {
                         </div>
                     </div>
                     <div className="settings box-shadow">
-                        <SettingsForm settings={props.settings} onChange={props.onChange}/>
+                        <SettingsForm settings={props.settings} onChange={props.onChange} disabled={!props.isOwner}/> 
                     </div>
                 </div>
         </div>
