@@ -3,21 +3,24 @@ import { useEffect, useState } from "react";
 import { PlayerResults } from './PlayerResults';
 
 export function ResultsPanel(props) {
-    function generateResults(){
-        if(props.results === null){
+    function generateResults() {
+        if (props.results === null) {
             return ("")
         }
-
-        return props.results.map((index,member)=>{
+        console.log(props.results)
+        return props.results.map((member, index) => {
             return (<PlayerResults player={member} index={index} />)
         })
 
     }
 
     return (
-        <table>
-            {generateResults()}
-        </table>
+        <div className='flex-horizontal box-shadow'>
+            <table>
+                {generateResults()}
+            </table>
+        </div>
+
     );
 }
 

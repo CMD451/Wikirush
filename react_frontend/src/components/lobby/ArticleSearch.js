@@ -44,7 +44,7 @@ export function ArticleSearch(props) {
             Artykuł:
             <AsyncSelect
                 isDisabled={props.isDisabled}
-                value={props.value}
+                value={{label:props.value,value:props.value}}
                 cacheOptions
                 onChange={onCurrentArticleChange}
                 loadOptions={loadOptionsDebounced}

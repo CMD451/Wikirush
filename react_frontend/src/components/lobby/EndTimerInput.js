@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export function EndTimerInput(props) {
     function handleOnChange(e){
         let value = e.target.value
-        if((value.isInteger())&&(value >= 0)){
+        if(value >= 0){
             props.onChange(e.target.value)
         }   
     }

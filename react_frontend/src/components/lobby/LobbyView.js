@@ -35,6 +35,7 @@ export function LobbyView(props) {
 
     function handleSettingsChange(newSettings) {
         //maybe update owner settings directly with newSettings
+        setSettings({...settings,...newSettings})
         WebSocketInstance.sendMessage(
             {
                 action: "settings_change",
@@ -136,7 +137,7 @@ export function LobbyView(props) {
                     setCurrentContent("game")
                     break;
                 case 'settings_change':
-                    setSettings(data['content'])
+                    if(currentUser.pk != ownerPk)  setSettings(data['content']);
                     break;
                 case 'lobby_unavailable':
                     WebSocketInstance.disconnect()
@@ -148,8 +149,8 @@ export function LobbyView(props) {
                     }
                     break;
                 case 'end_game':
-                    console.log(data);
-                    resultData = data['content']['members'].map((member) => {
+                    console.log(data['content'])
+                    let resultData = data['content']['members'].map((member) => {
                         let score = NaN
                         member['visitedPages'].every(page => {
                             if (page['article'] == settings['endArticle']) {
@@ -160,7 +161,7 @@ export function LobbyView(props) {
                         });
                         member['score'] = score
                     })
-
+                    console.log(resultData)
                     resultData.sort((a, b) => {
                         if (a['score'] > b['score']) {
                             return 1;
@@ -170,8 +171,8 @@ export function LobbyView(props) {
                         }
                         return 0
                     })
-
-                    setResults(resultData)
+                    setResults(data['content']['members'])
+                    console.log()
                     setCurrentContent('results')
                     break;
 
