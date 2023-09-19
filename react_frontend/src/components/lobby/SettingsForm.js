@@ -4,7 +4,6 @@ import { ArticleSearch } from './ArticleSearch';
 import { LanguageSelection } from './LanguageSelection';
 import { EndTimerInput } from './EndTimerInput';
 export function SettingsForm(props) {
-    //set default settings from props.settings LobbyView -> SettingsPanel -> SettingsForm
     return (
 
         <React.Fragment>

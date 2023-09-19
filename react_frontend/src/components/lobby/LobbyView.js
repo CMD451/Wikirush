@@ -24,7 +24,7 @@ export function LobbyView(props) {
     const [currentUser, setCurrentUser] = useState(user)
     const [settings, setSettings] = useState({
         startArticle: "Pet_door",
-        endArticle: "Berlin",
+        endArticle: "Pet",
         lang: "en",
         endTimer:30
     })

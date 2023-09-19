@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
+import { formatTime } from './util/formatTime';
 
 export function Timer(props) {
 
@@ -21,7 +22,7 @@ export function Timer(props) {
 
     return (
        <React.Fragment>
-            <h2>{(currentTime)/1000 }</h2>
+            <h2>{formatTime(currentTime)}</h2>
        </React.Fragment>
     );
 

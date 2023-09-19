@@ -14,20 +14,21 @@ export function Hub() {
     const [lobbyUri,setLobbyUri] = useState(null)
     const [user, setUser] = useState({})
     const [joined, setJoined] = useState(false)
-    
+    const [error,setError] = useState(null)
 
 
     function OnJoinLobby() {
         //validate
         //if valid
+        if((!user.username)||(user.username.length > 15)){
+            setError("Invalid username")
+            return
+        }
         let uri = window.location.pathname.replace("/","")
         if (uri.length > 0) {
             setLobbyUri(uri);
         }
-        let newUser = user
-        newUser['id'] =  generateId(user['username']);
-        newUser['pk'] = -1
-        setUser(newUser)
+        setUser(user)
         setJoined(true);
     }
     function generateContent() {
@@ -38,7 +39,7 @@ export function Hub() {
                 </UserContext.Provider>
             )
         }
-        return (<JoinLobbyView onChange={setUser} onJoin={OnJoinLobby} />)
+        return (<JoinLobbyView onChange={setUser} onJoin={OnJoinLobby} error={error}/>)
     }
     return (
         <React.Fragment>

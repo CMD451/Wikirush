@@ -32,12 +32,11 @@ export function JoinLobbyView(props) {
                 </div>
             </header>
             <main className="flex-horizontal">
-                <div className="container flex">
-                    <div className="avatar-picker-container">
+                <div className="container flex box-shadow">
                         <AvatarPicker onChange={onAvatarChange}/>
-                    </div>
                     <div className="input-container flex">
                         <UsernameInput onChange={onUsernameChange}/>
+                        <p className='error'>{props.error}</p>
                         <button onClick={props.onJoin}>Join</button>
                     </div>
                 </div>

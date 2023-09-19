@@ -1,12 +1,16 @@
 .hud-container{
+    
     display: flex;
     direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 2em;
+    padding: 1em;
     background-color: antiquewhite;
-    padding-bottom: 4em;
+    padding-bottom: 1.5em;
     border-bottom: 1px solid #a2a9b1;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
 }
 .game-container{
     flex-direction: column;

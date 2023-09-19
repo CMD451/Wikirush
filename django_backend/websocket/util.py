@@ -61,9 +61,11 @@ def create_member(member_data,lobby):
 
 @database_sync_to_async
 def remove_member(member_pk,lobby_name):
-    user = Member.objects.get(lobby__uri=lobby_name,pk=member_pk)
-    if user != None:
-        user.delete()
+    try:
+        user = Member.objects.get(lobby__uri=lobby_name,pk=member_pk)
+    except Member.DoesNotExist:
+        return
+    user.delete()
     
 def fetch_lobby_members(lobby_name):
     return Member.objects.filter(lobby__uri=lobby_name)

@@ -32,7 +32,7 @@ export function AvatarPicker(props) {
                 <img src={arrow} />
             </div>
             <div className="avatar-image-container">
-                <img src={generateAvatarUrl(avatarIndex)} />
+                <img className='picked-avatar' src={generateAvatarUrl(avatarIndex)} />
             </div>
             <div className="arrow-img arrow-right center-item" onClick={() => { handleNextButtonClick(1) }}>
                 <img src={arrow} />

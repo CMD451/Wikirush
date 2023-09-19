@@ -5,12 +5,11 @@ import { Hud } from '../game/Hud';
 
 export function Game(props) {
     const [currentUrl,setCurrentUrl] = useState(props.startUrl);
+    const [pageLoading,setPageLoading] = useState(false)
     const userTime = useRef(0.00)
-
     function onUrlChange(url){
         setCurrentUrl(url);
         if(url == props.endArticle){
-            alert("!!!")
             props.onGoalReached(url,userTime.current)
             return
         }
@@ -23,9 +22,9 @@ export function Game(props) {
     return (
         
         <div className='game-container'>
-            <Hud endArticle={props.endArticle}  startTime={userTime}  onTimeChange={onTimeChange}/>
+            <Hud endArticle={props.endArticle}  startTime={userTime}  onTimeChange={onTimeChange} isLoading={pageLoading}/>
             <div className='wikipage-container'>
-                <Wikipage lang={props.lang} page={currentUrl} onUrlChange={onUrlChange}/>
+                <Wikipage lang={props.lang} page={currentUrl} onUrlChange={onUrlChange} isLoading={pageLoading} onLoading={setPageLoading}/>
             </div>
         </div>
     );

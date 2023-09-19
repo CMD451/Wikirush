@@ -4,8 +4,7 @@ import '../../styles/hud.css'
 import { Timer } from './Timer';
 
 export function Hud(props) {
-    const [running,setRunning] = useState(true)
-
+   
 
     useEffect(()=>{
        
@@ -16,11 +15,8 @@ export function Hud(props) {
             <p>
                 Goal:{props.endArticle}
             </p>
-            <button onClick={(e)=>{console.log(running);setRunning(n => !n)}}>
-                Start/Stop
-            </button>
             <p>
-                Time: <Timer startTime={props.startTime} running={running} onTimeChange={props.onTimeChange}/>
+                Time: <Timer startTime={props.startTime} running={!props.isLoading} onTimeChange={props.onTimeChange} />
             </p>
         </div>
     );

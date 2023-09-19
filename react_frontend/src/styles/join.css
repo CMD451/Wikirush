@@ -48,14 +48,19 @@ footer{
     margin-bottom: 1em;
 }
 .header-img-container{
-    width: 20%;
-    min-width: 50px;
+    width: 15%;
+    min-width: 45px;
+}
+.error{
+    color: red;
+    font-size: 1.3em;
+    padding: 0.5em;
 }
 .avatar-image-container{
-    width: 70%;
+    width: 50%;
 }
 .arrow-img{
-    width: 12%;
+    width: 15%;
 }
 .flex{
     display: flex;
@@ -69,11 +74,14 @@ footer{
 .avatar-picker-container{
     display: flex;
     justify-content: space-between;
-    width: 80%;
-    margin-bottom: 1.5em;
+    width: 90%;
+    margin-bottom: 5em;
     padding: 0.2em;
     padding-bottom: 1em;
     border-bottom: var(--wiki-border) solid 0.3px ;
+}
+.avatar{
+    
 }
 .container{
     padding: 0.5em;
@@ -117,10 +125,19 @@ button:focus{
         flex-direction: row;
     }
     .avatar-picker-container{
+        width: 60%;
         border-bottom: 0px;
+        margin-bottom: 1.5em;
+    }
+  
+    .arrow-img{
+
+    }
+    .avatar-image-container{
+
     }
     .input-container{
-        width: 80%;
+        width: 70%;
     }
     .input-container label{
         margin: 1em auto;
