@@ -3,6 +3,8 @@ import { useEffect, useState,useRef } from "react";
 import { Wikipage } from '../game/Wikipage';
 import { Hud } from '../game/Hud';
 
+
+
 export function Game(props) {
     const [currentUrl,setCurrentUrl] = useState(props.startUrl);
     const [pageLoading,setPageLoading] = useState(false)

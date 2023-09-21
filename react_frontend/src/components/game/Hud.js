@@ -16,7 +16,7 @@ export function Hud(props) {
                 Goal:{props.endArticle}
             </p>
             <p>
-                Time: <Timer startTime={props.startTime} running={!props.isLoading} onTimeChange={props.onTimeChange} />
+                Time: <Timer startTime={props.startTime} running={!props.isLoading} onTimeChange={props.onTimeChange}/>
             </p>
         </div>
     );

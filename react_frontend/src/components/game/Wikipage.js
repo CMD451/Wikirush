@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { FullScreenLoading } from '../util/FullScreenLoading';
 import { wikipageRequest } from '../../lookup/lookup';
 import '../../styles/wikipedia.css'
+import { sanatizeUrl } from './util/sanatizeUrl';
+
 const interceptClicks = require('intercept-link-clicks')
 
 export function Wikipage(props) {
@@ -12,8 +14,13 @@ export function Wikipage(props) {
     useEffect(() => {
         interceptClicks((e, el) => {
             e.preventDefault()
+            let uri = el.getAttribute('href').split('/')
+            if(uri[1] != "wiki"){
+                return
+            }
             if ('onUrlChange' in props) {
-                props.onUrlChange(el.getAttribute('href').split('/')[2])
+                uri[2] = sanatizeUrl(uri[2])
+                props.onUrlChange(uri[2])
             }
         });
     }, [])

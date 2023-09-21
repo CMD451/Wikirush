@@ -130,6 +130,7 @@ button{
         font-size: 16px;
     }
     .main-container{
+        width: 70%;
         flex-direction: row;
         justify-content: space-evenly;
     }
@@ -162,5 +163,32 @@ button{
     }
     .wikipage-container{
         width: 80%;
+    }
+  }
+
+
+
+  /* results style */
+.result-table{
+    width: 100%;
+}
+.result-table-img{
+    width: 80%;
+    max-width: 150px;
+    height: auto;
+}
+img{
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.results-row-end{
+    width: 100%;
+    border-bottom: 1px black;
+    padding-bottom: 0.75em;
+}
+@media (min-width: 650px) {
+    .result-table-img{
+        width: 30%;
     }
   }

@@ -2,15 +2,17 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import { formatTime } from '../game/util/formatTime';
 export function PlayerResults(props) {
-    const [showVisitedPages,setShowVisitedPages] = useState(false)
+    const [showVisitedPages, setShowVisitedPages] = useState(false)
     //in props player, index
-    function generateVisitedPages(){
-        if(!showVisitedPages) return ("");
+    function generateVisitedPages() {
+        if (!showVisitedPages) return ("");
 
         let pages = props.player.visitedPages
-        pages = pages.map((page)=>{
+        pages = pages.map((page) => {
             return (
                 <tr>
+                    <td></td>
+                    <td></td>
                     <td>
                         {page.article}
                     </td>
@@ -21,29 +23,35 @@ export function PlayerResults(props) {
             )
         })
         return (
-            <table>
+            <React.Fragment>
                 {pages}
-            </table>
+            </React.Fragment>
         )
 
     }
     console.log(props)
     return (
-        <tr>
-            <td>
-                {props.index + 1}
-            </td>
-            <td>
-                {props.player['username']}
-            </td>
-            <td>
-                {formatTime(props.player['score'])}
-            </td>
-            <td>
-                <button onClick={()=>{setShowVisitedPages(n=>!n)}} >{showVisitedPages ? "Hide" : "Show"}</button>
-            </td>
+        <React.Fragment>
+            <tr>
+                <th>
+                    {props.index + 1}
+                </th>
+                <th>
+                    <img src={props.player['avatarUrl']} className='result-table-img' />
+                </th>
+                <th>
+                    {props.player['username']}
+                </th>
+                <th>
+                    {formatTime(props.player['score'])}
+                </th>
+                <th>
+                    <button onClick={() => { setShowVisitedPages(n => !n) }} >{showVisitedPages ? "Hide" : "Show"}</button>
+                </th>
+            </tr>
             {generateVisitedPages()}
-        </tr>
+            <span className='results-row-end' />
+        </React.Fragment>
     );
 }
 

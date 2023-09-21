@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import '../../styles/join.css'
 import { AvatarPicker } from './AvatarPicker';
 import { UsernameInput } from './UsernameInput';
-import avatar from "../../assets/img/avatars/avatar.png"
+import avatar from "../../assets/img/avatars/avatar2.png"
 
 
 import { wikipageRequest } from '../../lookup/lookup';

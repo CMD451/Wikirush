@@ -1,10 +1,11 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { formatTime } from './util/formatTime';
 
-export function Timer(props) {
 
+export function Timer(props) {
     const [currentTime, setCurrentTime] = useState(0);
+    const startTime = useRef(Date.now)
     useEffect(()=>{
        let interval = setInterval(()=>{
        if (props.running){
