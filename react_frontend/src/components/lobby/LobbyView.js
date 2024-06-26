@@ -20,7 +20,6 @@ export function LobbyView(props) {
     const [ownerPk, setOwnerPk] = useState([0]);
     const [ownerToken, setOwnerToken] = useState([""]);
     const [results, setResults] = useState(null)
-
     const [currentUser, setCurrentUser] = useState(user)
     const [settings, setSettings] = useState({
         startArticle: "Pet_door",
@@ -31,7 +30,6 @@ export function LobbyView(props) {
     //const [isOwner] = useIsOwner(currentUser,ownerPk)
     let isOwner = ownerPk == currentUser.pk
     let isFirstRender = useRef(true);
-
 
     function handleSettingsChange(newSettings) {
         //maybe update owner settings directly with newSettings
@@ -54,7 +52,7 @@ export function LobbyView(props) {
             </React.Fragment>
         ),
         game: (
-            <Game endArticle={settings['endArticle']} startUrl={settings['startArticle']} onPageVisit={sendPageVisitAction} onGoalReached={sendGoalReachedAction} lang={settings['lang']} />
+            <Game endArticle={settings['endArticle']} players={players}  startUrl={settings['startArticle']} onPageVisit={sendPageVisitAction} onGoalReached={sendGoalReachedAction} lang={settings['lang']} />
         ),
         unavailable: (
             <LobbyUnavailable />
@@ -131,10 +129,22 @@ export function LobbyView(props) {
                     break;
                 case 'designate_as_owner':
                     setOwnerToken(data['content'])
-                    break;
+                    break; 
                 case 'start_game':
                     alert("Starting the game")
+                    setPlayers(players.map((player)=>{
+                        player['current_article'] = settings.startArticle
+                        return player
+                    }))
                     setCurrentContent("game")
+                    break;
+                case 'player_page_visit':
+                    console.log("Player visit")
+                    let players_copy = [...players]
+                    let player_index = players_copy.findIndex((player)=>player.pk == data['content']['member'])
+                    players_copy[player_index]['current_article'] = data['content']['article']
+                    setPlayers(players_copy)
+                    console.log(players)
                     break;
                 case 'settings_change':
                     if(currentUser.pk != ownerPk)  setSettings(data['content']);
@@ -178,7 +188,7 @@ export function LobbyView(props) {
 
             }
         })
-    }
+    }  
 
     useEffect(() => {
         setCallbacks();
@@ -203,7 +213,6 @@ export function LobbyView(props) {
             <div className="main-container">
                 {content[currentContent]}
             </div>
-
         </main >
     );
 }

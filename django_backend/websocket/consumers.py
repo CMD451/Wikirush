@@ -15,7 +15,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         self.room_group_name =  'game_room_%s' % self.room_name
         self.member_pk = 1
         if await is_lobby_none(self.room_name):
-             await create_lobby(self.room_name)
+            await create_lobby(self.room_name)
         await self.channel_layer.group_add(
         self.room_group_name,
         self.channel_name
@@ -131,10 +131,17 @@ class GameConsumer(AsyncWebsocketConsumer):
 
     async def page_visit_action(self,json_data):
         lobby = await get_lobby(self.room_name)
-
         json_data['content']['lobby'] = lobby.pk
         json_data['content']['member'] = self.member_pk
         await add_wiki_visit(json_data['content'])
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                "type":"player_page_visit",
+                "content":json_data['content']
+            }
+        )
+
         
     async def end_game_action(self,time):
         await asyncio.sleep(time)
@@ -219,4 +226,5 @@ class GameConsumer(AsyncWebsocketConsumer):
     async def end_game(self,event):
         await self.standard_message_send(event)
         
-            
+    async def player_page_visit(self,event):
+        await self.standard_message_send(event)

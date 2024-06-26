@@ -120,17 +120,28 @@ button{
     margin-left: 1em;
     min-width: fit-content;
 }
+
+.game-content-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
 .wikipage-container{
     padding: 1em;
-    width: 100%;
+    width: 80%;
     margin: 0 auto;
+}
+.player-article-container{
+    width: 20%;
+    background-color: tomato;
 }
 @media (min-width: 650px) {
     html{
         font-size: 16px;
     }
     .main-container{
-        width: 70%;
+        width: 100%;
         flex-direction: row;
         justify-content: space-evenly;
     }
@@ -162,7 +173,10 @@ button{
         width: 30%;
     }
     .wikipage-container{
-        width: 80%;
+        width: 70%;
+    }
+    .player-article-container{
+        width: 30%;
     }
   }
 
@@ -192,3 +206,27 @@ img{
         width: 30%;
     }
   }
+
+.player-article{
+width:100%;
+margin: 0 auto;
+background:yellow;
+}
+.player{
+display:flex;   
+background:tomato;
+}
+.player-img{
+width:5%;
+height:50px;
+
+}
+.player-username{
+display:flex;
+flex-direction:column;
+justify-content:space-around;
+background:purple;
+}
+.player-article{
+
+}  

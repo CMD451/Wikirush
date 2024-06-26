@@ -6,6 +6,7 @@ from django.db import models
 class Lobby(models.Model):
     class Meta:
         ordering = ['creationTimestamp']
+        
     uri = models.CharField(max_length=50)
     owner = models.ForeignKey("Member",blank=True,on_delete=models.SET_NULL,null=True,related_name="ownedLobby")
     creationTimestamp = models.DateTimeField(auto_now_add=True)

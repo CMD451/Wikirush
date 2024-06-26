@@ -1,5 +1,6 @@
 
 export async function fetchBackendLookup(method, url, data) {
+    console.log("Sending request to "+url);
     let fetch_data = {
       method: method,
       mode: 'cors',
