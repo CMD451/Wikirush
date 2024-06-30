@@ -13,10 +13,10 @@ export function Hud(props) {
     return (
         <div className='hud-container'>
             <p>
-                Goal:{props.endArticle}
+                <h3>Goal: {props.endArticle}</h3>   
             </p>
             <p>
-                Time: <Timer startTime={props.startTime} running={!props.isLoading} onTimeChange={props.onTimeChange}/>
+                <Timer startTime={props.startTime} running={!props.isLoading} onTimeChange={props.onTimeChange}/>
             </p>
         </div>
     );

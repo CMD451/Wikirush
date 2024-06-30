@@ -15,7 +15,7 @@ export function ResultsPanel(props) {
     }
 
     return (
-        <div className='flex-horizontal box-shadow'>
+        <div className='flex-horizontal'>
             <table className='result-table'>
                 {generateResults()}
             </table>

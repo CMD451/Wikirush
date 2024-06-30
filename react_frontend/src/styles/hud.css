@@ -4,9 +4,9 @@
     direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 1em;
-    background-color: antiquewhite;
-    padding-bottom: 1.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    background-color: var(--secondary-bg-color);
     border-bottom: 1px solid #a2a9b1;
     position: -webkit-sticky; /* Safari */
     position: sticky;

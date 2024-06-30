@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import '../../styles/join.css'
+import '../../styles/base.css'
 import { AvatarPicker } from './AvatarPicker';
 import { UsernameInput } from './UsernameInput';
 import avatar from "../../assets/img/avatars/avatar2.png"
@@ -32,7 +33,7 @@ export function JoinLobbyView(props) {
                 </div>
             </header>
             <main className="flex-horizontal">
-                <div className="container flex box-shadow">
+                <div className="container flex">
                         <AvatarPicker onChange={onAvatarChange}/>
                     <div className="input-container flex">
                         <UsernameInput onChange={onUsernameChange}/>

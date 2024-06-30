@@ -8,11 +8,10 @@ export function SettingsPanel(props) {
         navigator.clipboard.writeText(window.location.href)
     }
     return (
-        <div className="main-container box-shadow">
-            <div className="settings-container">
+            <div className="settings-container floating-box">
                     <div className="start-options">
                         <div className="buttons-container">
-                            <button disabled={!props.isOwner} onClick={props.OnStartButtonClick}>Start</button>
+                            <button className='start-button' disabled={!props.isOwner} onClick={props.OnStartButtonClick}>Start</button>
                             <button onClick={onInviteButtonClick}>Copy Invite</button>
                         </div>
                     </div>
@@ -20,7 +19,6 @@ export function SettingsPanel(props) {
                         <SettingsForm settings={props.settings} onChange={props.onChange} disabled={!props.isOwner}/> 
                     </div>
                 </div>
-        </div>
     );
 }
 

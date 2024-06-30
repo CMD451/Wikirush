@@ -24,19 +24,17 @@ export function Game(props) {
     }
 
     return (
-        
-        <div className='game-container'>
-            <Hud endArticle={props.endArticle}  startTime={userTime}  onTimeChange={onTimeChange} isLoading={pageLoading}/>
-            <div className='game-content-container'>
-                <div className='player-article-container'>
-                    <ArticlePlayerList players={props.players}/>
-                </div>
+        <React.Fragment>
+          <div className='player-article-container'>
+            <ArticlePlayerList players={props.players}/>
+            </div>
+            <div className='game-container'>
+                <Hud endArticle={props.endArticle}  startTime={userTime}  onTimeChange={onTimeChange} isLoading={pageLoading}/>
                 <div className='wikipage-container'>
                     <Wikipage lang={props.lang} page={currentUrl} onUrlChange={onUrlChange} isLoading={pageLoading} onLoading={setPageLoading}/>
                 </div>
             </div>
-            
-        </div>
+        </React.Fragment>
     );
 }
 

@@ -15,7 +15,7 @@ export function ArticlePlayerList(props) {
                   </div>
                 </div>
                  <div class="player-article">
-                  <span>{player.current_article}</span>
+                  <span>Article: {player.current_article}</span>
                 </div>
               </div>
             )

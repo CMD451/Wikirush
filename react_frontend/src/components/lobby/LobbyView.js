@@ -196,6 +196,7 @@ export function LobbyView(props) {
     useEffect(() => {
         WebSocketInstance.connect(props.uri);
     }, [])
+    
     useEffect(() => {
         if (isFirstRender) {
             isFirstRender = false

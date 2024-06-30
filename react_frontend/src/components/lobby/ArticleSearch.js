@@ -41,7 +41,6 @@ export function ArticleSearch(props) {
     }
     return (
         <div>
-            Artykuł:
             <AsyncSelect
                 isDisabled={props.isDisabled}
                 value={{label:props.value,value:props.value}}

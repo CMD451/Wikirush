@@ -29,7 +29,7 @@ export function PlayerList(props) {
         return playersArray
     }
     return (
-        <div className="player-list-container flex-horizontal box-shadow">
+        <div className="player-list-container flex-horizontal floating-box">
             {generatePlayersContainers()}
         </div>
     );
