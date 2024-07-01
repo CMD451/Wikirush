@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { formatTime } from '../game/util/formatTime';
+import { formatTime } from '../../util/formatTime';
 export function PlayerResults(props) {
     const [showVisitedPages, setShowVisitedPages] = useState(false)
     //in props player, index

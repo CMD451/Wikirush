@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { FullScreenLoading } from '../util/FullScreenLoading';
+import { FullScreenLoading } from '../../util/FullScreenLoading';
 import { wikipageRequest } from '../../lookup/lookup';
 import '../../styles/wikipedia.css'
-import { sanatizeUrl } from './util/sanatizeUrl';
+import { sanatizeUrl } from '../../util/sanatizeUrl';
 
 const interceptClicks = require('intercept-link-clicks')
 

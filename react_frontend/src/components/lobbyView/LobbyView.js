@@ -1,16 +1,15 @@
 import React from 'react';
 import { useEffect, useState, useRef } from "react";
-import { JoinLobbyView } from '../joinView/JoinLobbyView';
-import { UserContext } from '../Hub.js/Hub';
+import { UserContext } from '../joinView/JoinLobbyView';
 import WebSocketInstance from '../../websocket/websocket';
-import { PlayerList } from '../lobby/PlayerList'
+import { PlayerList } from './PlayerList'
 import { SettingsPanel } from './SettingsPanel';
 import { ResultsPanel } from './ResultsPanel';
-import { useIsOwner } from './hooks/useIsOwner'
-import { FullScreenLoading } from '../util/FullScreenLoading';
+import { FullScreenLoading } from '../../util/FullScreenLoading';
 import { LobbyUnavailable } from './LobbyUnavailable';
-import { Game } from './Game';
+import { Game } from '../gameView/Game';
 import '../../styles/game.css'
+import { WaitForEnd } from './WaitForEnd';
 
 
 export function LobbyView(props) {
@@ -58,8 +57,8 @@ export function LobbyView(props) {
             <LobbyUnavailable />
         ),
         waitingForEnd:(
-            
-        )
+            <WaitForEnd/>
+        ),
         loading: (
             <FullScreenLoading />
         ),

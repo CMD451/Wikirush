@@ -1,8 +1,8 @@
 import React from 'react';
 import { useEffect, useState,useRef } from "react";
-import { Wikipage } from '../game/Wikipage';
-import { Hud } from '../game/Hud';
-import { ArticlePlayerList } from '../game/ArticlePlayerList';
+import { Wikipage } from './Wikipage';
+import { Hud } from './Hud';
+import { ArticlePlayerList } from './ArticlePlayerList';
 
 
 

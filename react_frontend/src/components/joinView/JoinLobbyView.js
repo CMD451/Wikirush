@@ -1,50 +1,50 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import '../../styles/join.css'
-import '../../styles/base.css'
-import { AvatarPicker } from './AvatarPicker';
-import { UsernameInput } from './UsernameInput';
-import avatar from "../../assets/img/avatars/avatar2.png"
+import { JoinForm } from './JoinForm';
+import { LobbyView } from '../lobbyView/LobbyView';
+import { generateId } from '../../util/generateId';
 
 
-import { wikipageRequest } from '../../lookup/lookup';
-
-export function JoinLobbyView(props) {
-
-    const [username,setUsername] = useState("")
-    const [avatarUrl,setAvatarUrl] = useState(avatar)
+export const UserContext = React.createContext({
+    user: null,
+});
 
 
-    function onAvatarChange(e){
-        setAvatarUrl(e);
-    }
-    function onUsernameChange(e){
-        setUsername(e);
-    }
-    useEffect(()=>{
-        if("onChange" in props){
-            props.onChange({"username":username,"avatarUrl":avatarUrl})
+export function JoinLobbyView() {
+    const [lobbyUri,setLobbyUri] = useState(null)
+    const [user, setUser] = useState({})
+    const [joined, setJoined] = useState(false)
+    const [error,setError] = useState(null)
+
+
+    function OnJoinLobby() {
+        //validate
+        //if valid
+        if((!user.username)||(user.username.length > 15)||(user.username.length < 3)){
+            setError("Invalid username")
+            return
         }
-    },[username,avatarUrl])
+        let uri = window.location.pathname.replace("/","")
+        if (uri.length > 0) {
+            console.log(uri)
+            setLobbyUri(uri);
+        }
+        setUser(user)
+        setJoined(true);
+    }
+    function generateContent() {
+        if (joined) {
+            return (
+                <UserContext.Provider value={{ user, setUser }}>
+                    <LobbyView uri={lobbyUri}/>
+                </UserContext.Provider>
+            )
+        }
+        return (<JoinForm onChange={setUser} onJoin={OnJoinLobby} error={error}/>)
+    }
     return (
         <React.Fragment>
-            <header className="flex-horizontal">
-                <div className="header-img-container">
-                </div>
-            </header>
-            <main className="flex-horizontal">
-                <div className="container flex">
-                        <AvatarPicker onChange={onAvatarChange}/>
-                    <div className="input-container flex">
-                        <UsernameInput onChange={onUsernameChange}/>
-                        <p className='error'>{props.error}</p>
-                        <button onClick={props.onJoin}>Join</button>
-                    </div>
-                </div>
-
-            </main>
-            <footer>
-            </footer>
+            {generateContent()}
         </React.Fragment>
     );
 }

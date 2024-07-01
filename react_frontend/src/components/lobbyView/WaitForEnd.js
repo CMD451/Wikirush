@@ -1,6 +1,4 @@
 import React from 'react';
-import { useEffect, useState } from "react";
-import { JoinLobbyView } from '../joinView/JoinLobbyView';
 
 export function WaitForEnd(props) {
     return (

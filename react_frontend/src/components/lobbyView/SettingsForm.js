@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect, useState } from "react";
 import { ArticleSearch } from './ArticleSearch';
 import { LanguageSelection } from './LanguageSelection';
 import { EndTimerInput } from './EndTimerInput';

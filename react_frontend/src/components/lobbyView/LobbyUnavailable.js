@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { JoinLobbyView } from '../joinView/JoinLobbyView';
+import { JoinLobbyView } from '../joinView/JoinForm';
 
 export function LobbyUnavailable(props) {
     return (
