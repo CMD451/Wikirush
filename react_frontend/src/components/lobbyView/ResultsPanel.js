@@ -7,7 +7,6 @@ export function ResultsPanel(props) {
         if (props.results === null) {
             return ("")
         }
-        console.log(props.results)
         return props.results.map((member, index) => {
             return (<PlayerResults player={member} index={index} />)
         })
@@ -15,7 +14,7 @@ export function ResultsPanel(props) {
     }
 
     return (
-        <div className='flex-horizontal'>
+        <div className='floating-box game-result-container'>
             <table className='result-table'>
                 {generateResults()}
             </table>

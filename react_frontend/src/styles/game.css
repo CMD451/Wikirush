@@ -39,13 +39,16 @@ img{
     display: flex;
 }
 
-.main-container{
+.main-container,.main-game-container{
     width: 100%;
     margin: 0 auto;
     min-height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+.main-game-container{
+    flex-direction: row;
 }
 .player-list-container{
     height: 20%;
@@ -116,57 +119,6 @@ img{
     top: 0;
     
 }
-@media (min-width: 650px) {
-    html{
-        font-size: 16px;
-    }
-    .main-container{
-        width: 90%;
-        flex-direction: row;
-        justify-content: space-around;
-    }
-    .settings{
-        order: -1;
-    }
-    .player-list-container{
-        height: auto;
-        width: 20%;
-        min-width: fit-content;
-        order: -1;
-        flex-direction: column;
-        margin-top: 0;
-        margin-right: 0.6em;
-    }
-    .single-player-container{
-        max-width: 270px;
-        flex-direction: row;
-        width: 100%;
-    }
-    .settings-container{
-        flex-grow: 0;
-        height: auto;
-        width: 80%;
-    }
-    .buttons-container{
-        margin-top: 1.5em;
-    }
-    .start-button{
-        margin-right: 1.5em;
-    }
-    .username{
-        width: 20%;
-        margin-left: 2em;
-    }
-    .avatar{
-        width: 30%;
-    }
-    .wikipage-container{
-        width: 70%;
-    }
-    .player-article-container{
-        width: 15%;
-    }
-  }
 
 
 
@@ -175,8 +127,8 @@ img{
     width: 100%;
 }
 .result-table-img{
-    width: 80%;
-    max-width: 150px;
+    width: 30%;
+    max-width: 100px;
     height: auto;
 }
 img{
@@ -189,11 +141,6 @@ img{
     border-bottom: 1px black;
     padding-bottom: 0.75em;
 }
-@media (min-width: 650px) {
-    .result-table-img{
-        width: 30%;
-    }
-  }
 
 .player-in-game{
     padding: 0.5em;
@@ -258,7 +205,29 @@ button:focus{
 
 }
 
+.main-game-container{
+    background-color: var(--primary-bg-color);
+}
+
+.game-result-container{
+    height: auto;
+    width:100%;
+}
+
+
+
 @media (min-width: 650px) {
+    html{
+        font-size: 16px;
+    }
+    .game-result-container{
+        width: 40%;
+    }
+    .main-container,.main-game-container{
+        width: 90%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
     .floating-box::before{
         box-sizing: border-box;
         content: "";
@@ -269,8 +238,48 @@ button:focus{
         background-color: black;
         background-size: 100% 100%;
     }
-}
-
-.main-game-container{
-    background-color: var(--primary-bg-color);
-}
+    .result-table-img{
+        min-width: 15px;
+    }
+    .settings{
+        order: -1;
+    }
+    .player-list-container{
+        height: auto;
+        width: 20%;
+        min-width: fit-content;
+        order: -1;
+        flex-direction: column;
+        margin-top: 0;
+        margin-right: 0.6em;
+    }
+    .single-player-container{
+        max-width: 270px;
+        flex-direction: row;
+        width: 100%;
+    }
+    .settings-container{
+        flex-grow: 0;
+        height: auto;
+        width: 80%;
+    }
+    .buttons-container{
+        margin-top: 1.5em;
+    }
+    .start-button{
+        margin-right: 1.5em;
+    }
+    .username{
+        width: 20%;
+        margin-left: 2em;
+    }
+    .avatar{
+        width: 30%;
+    }
+    .wikipage-container{
+        width: 70%;
+    }
+    .player-article-container{
+        width: 15%;
+    }
+  }

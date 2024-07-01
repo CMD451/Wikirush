@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { formatTime } from '../../util/formatTime';
 export function PlayerResults(props) {
     const [showVisitedPages, setShowVisitedPages] = useState(false)
@@ -29,7 +29,6 @@ export function PlayerResults(props) {
         )
 
     }
-    console.log(props)
     return (
         <React.Fragment>
             <tr>

@@ -26,7 +26,7 @@ export function Game(props) {
 
 
     return (
-        <React.Fragment>
+        <div className='main-game-container'>
           <div className='player-article-container'>
             <ArticlePlayerList players={props.players}/>
             </div>
@@ -36,7 +36,7 @@ export function Game(props) {
                     <Wikipage lang={props.lang} page={currentUrl} onUrlChange={onUrlChange} isLoading={pageLoading} onLoading={setPageLoading}/>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 
