@@ -14,6 +14,7 @@ export function Game(props) {
         setCurrentUrl(url);
         if(url == props.endArticle){
             props.onGoalReached(url,userTime.current)
+            
             return
         }
         props.onPageVisit(url,userTime.current)

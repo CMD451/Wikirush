@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { UserContext } from '../joinView/JoinLobbyView';
 import WebSocketInstance from '../../websocket/websocket';
 import { PlayerList } from './PlayerList'
-import { SettingsPanel } from './SettingsPanel';
+import { SettingsPanel } from './settingsForm/SettingsPanel';
 import { ResultsPanel } from './ResultsPanel';
 import { FullScreenLoading } from '../../util/FullScreenLoading';
 import { LobbyUnavailable } from './LobbyUnavailable';
@@ -26,8 +26,7 @@ export function LobbyView(props) {
         lang: "en",
         endTimer:30
     })
-    //const [isOwner] = useIsOwner(currentUser,ownerPk)
-    let isOwner = ownerPk == currentUser.pk
+    const isOwner = ownerPk == currentUser.pk
     let isFirstRender = useRef(true);
 
     function handleSettingsChange(newSettings) {
@@ -41,6 +40,11 @@ export function LobbyView(props) {
             }
         )
     }
+    
+    function onGoalArticleReached(articleName, userTime){
+        sendGoalReachedAction(articleName,userTime);
+        setCurrentContent("waitingForEnd")
+    }
 
     const [currentContent, setCurrentContent] = useState("loading")
     let content = {
@@ -51,13 +55,14 @@ export function LobbyView(props) {
             </React.Fragment>
         ),
         game: (
-            <Game endArticle={settings['endArticle']} players={players}  startUrl={settings['startArticle']} onPageVisit={sendPageVisitAction} onGoalReached={sendGoalReachedAction} lang={settings['lang']} />
+            <Game endArticle={settings['endArticle']} players={players}  startUrl={settings['startArticle']}
+                onPageVisit={sendPageVisitAction} onGoalReached={onGoalArticleReached} lang={settings['lang']} />
         ),
         unavailable: (
             <LobbyUnavailable />
         ),
         waitingForEnd:(
-            <WaitForEnd/>
+            <WaitForEnd endTime={settings.endTimer} />
         ),
         loading: (
             <FullScreenLoading />

@@ -2,7 +2,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import AsyncSelect from 'react-select/async';
-import { searchForArticle } from '../../lookup/lookup';
+import { searchForArticle } from '../../../lookup/lookup';
 var debounce = require('debounce-promise')
 export function ArticleSearch(props) {
     const [articleOptions, setArticleOptions] = useState([])

@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import '../../styles/hud.css'
 import { formatTime } from '../../util/formatTime';
-import { useTimer } from './hooks/useTimer';
+import { useTimer } from '../../util/useTimer';
 
 export function Hud(props) {
     const time = useTimer(!props.pageLoading,100)
