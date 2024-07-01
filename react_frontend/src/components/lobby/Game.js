@@ -23,13 +23,14 @@ export function Game(props) {
         userTime.current = newTime;
     }
 
+
     return (
         <React.Fragment>
           <div className='player-article-container'>
             <ArticlePlayerList players={props.players}/>
             </div>
             <div className='game-container'>
-                <Hud endArticle={props.endArticle}  startTime={userTime}  onTimeChange={onTimeChange} isLoading={pageLoading}/>
+                <Hud endArticle={props.endArticle} onTimeChange={onTimeChange} isLoading={pageLoading} time={userTime}/>
                 <div className='wikipage-container'>
                     <Wikipage lang={props.lang} page={currentUrl} onUrlChange={onUrlChange} isLoading={pageLoading} onLoading={setPageLoading}/>
                 </div>

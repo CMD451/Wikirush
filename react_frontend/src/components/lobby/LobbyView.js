@@ -57,6 +57,9 @@ export function LobbyView(props) {
         unavailable: (
             <LobbyUnavailable />
         ),
+        waitingForEnd:(
+            
+        )
         loading: (
             <FullScreenLoading />
         ),

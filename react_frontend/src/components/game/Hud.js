@@ -1,14 +1,15 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import '../../styles/hud.css'
-import { Timer } from './Timer';
+import { formatTime } from './util/formatTime';
+import { useTimer } from './hooks/useTimer';
 
 export function Hud(props) {
-   
+    const time = useTimer(!props.pageLoading,100)
 
     useEffect(()=>{
-       
-    },[])
+       props.onTimeChange(time)
+    },[time])
 
     return (
         <div className='hud-container'>
@@ -16,7 +17,7 @@ export function Hud(props) {
                 <h3>Goal: {props.endArticle}</h3>   
             </p>
             <p>
-                <Timer startTime={props.startTime} running={!props.isLoading} onTimeChange={props.onTimeChange}/>
+                <h2>{formatTime(time)}</h2>
             </p>
         </div>
     );
