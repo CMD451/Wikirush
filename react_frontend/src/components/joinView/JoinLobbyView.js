@@ -1,8 +1,8 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { JoinForm } from './JoinForm';
 import { LobbyView } from '../lobbyView/LobbyView';
-import { generateId } from '../../util/generateId';
+import { genereateRandomLobbyId } from '../../util/genereateRandomLobbyId';
 
 
 export const UserContext = React.createContext({
@@ -11,11 +11,19 @@ export const UserContext = React.createContext({
 
 
 export function JoinLobbyView() {
-    const [lobbyUri,setLobbyUri] = useState(null)
+    const lobbyUri = useRef(null)
     const [user, setUser] = useState({})
     const [joined, setJoined] = useState(false)
     const [error,setError] = useState(null)
 
+
+    useEffect(()=>{
+        if(window.location.pathname.replace("/","").length <= 0){
+            const newUri = genereateRandomLobbyId()
+            lobbyUri.current = newUri
+            window.history.replaceState({}, '', new URL(newUri,window.location.href));
+        }
+    },[])
 
     function OnJoinLobby() {
         //validate
@@ -23,11 +31,6 @@ export function JoinLobbyView() {
         if((!user.username)||(user.username.length > 15)||(user.username.length < 3)){
             setError("Invalid username")
             return
-        }
-        let uri = window.location.pathname.replace("/","")
-        if (uri.length > 0) {
-            console.log(uri)
-            setLobbyUri(uri);
         }
         setUser(user)
         setJoined(true);
@@ -42,6 +45,7 @@ export function JoinLobbyView() {
         }
         return (<JoinForm onChange={setUser} onJoin={OnJoinLobby} error={error}/>)
     }
+   
     return (
         <React.Fragment>
             {generateContent()}
