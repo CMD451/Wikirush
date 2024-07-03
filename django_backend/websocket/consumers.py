@@ -93,7 +93,11 @@ class GameConsumer(AsyncWebsocketConsumer):
              }
         )
         print("Removing user:" + str(self.member_pk))
-        await remove_member(self.member_pk,self.room_name)
+        lobby = await get_lobby(self.room_name)
+        if(await get_lobby_members_count(lobby) <= 1):
+            await remove_lobby(lobby)
+        else:
+            await remove_member(self.member_pk,self.room_name)
         
 
     async def start_game_action(self,json_data):
@@ -101,9 +105,8 @@ class GameConsumer(AsyncWebsocketConsumer):
             return
         
         #check if lobby already started
-        lobby = await get_lobby(self.room_name)
+        lobby = await get_lobby(self.room_name)  
         await db_lobby_start(lobby)
-
         await self.channel_layer.group_send(
              self.room_group_name,
              {
@@ -215,6 +218,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             await self.standard_message_send(event)
             
     async def start_game(self,event):
+
         await self.standard_message_send(event)
 
     async def settings_change(self,event):

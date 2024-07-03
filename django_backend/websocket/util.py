@@ -9,7 +9,6 @@ def is_lobby_none(lobby_name):
         return True
     return False
 
-
 @database_sync_to_async
 def is_lobby_owner_set(lobby):
     return is_lobby_owner_set_sync(lobby)
@@ -43,6 +42,10 @@ def create_lobby(lobby_name):
     Lobby.objects.create(
          uri=lobby_name,
          ).save()
+    
+@database_sync_to_async
+def remove_lobby(lobby):
+   lobby.delete()
 
 @database_sync_to_async
 def get_lobby(lobby_name):
@@ -67,7 +70,6 @@ def remove_member(member_pk,lobby_name):
         return
     user.delete()
     
-@database_sync_to_async
 def fetch_lobby_members(lobby_name):
     return Member.objects.filter(lobby__uri=lobby_name)
 
