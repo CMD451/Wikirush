@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import '../../styles/hud.css'
 import { formatTime } from '../../util/formatTime';
 import { useTimer } from '../../util/useTimer';

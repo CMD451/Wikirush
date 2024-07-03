@@ -32,6 +32,9 @@ export function JoinLobbyView() {
             setError("Invalid username")
             return
         }
+        if(lobbyUri.current === null || lobbyUri.current.length <= 0){
+            lobbyUri.current = window.location.pathname.replace("/","");
+        }
         setUser(user)
         setJoined(true);
     }
@@ -39,7 +42,7 @@ export function JoinLobbyView() {
         if (joined) {
             return (
                 <UserContext.Provider value={{ user, setUser }}>
-                    <LobbyView uri={lobbyUri}/>
+                    <LobbyView uri={lobbyUri.current}/>
                 </UserContext.Provider>
             )
         }

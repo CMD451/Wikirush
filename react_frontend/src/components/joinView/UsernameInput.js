@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import '../../styles/join.css'
 
 export function UsernameInput(props) {
@@ -17,7 +17,7 @@ export function UsernameInput(props) {
     }
     return (
         <React.Fragment>
-            <label for="username">Type your username!</label>
+            <label htmlFor="username">Type your username!</label>
             <input name="username" className="input-username" type="text" value={username} onChange={handleChange}/>
         </React.Fragment>
             

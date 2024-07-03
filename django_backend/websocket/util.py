@@ -67,6 +67,7 @@ def remove_member(member_pk,lobby_name):
         return
     user.delete()
     
+@database_sync_to_async
 def fetch_lobby_members(lobby_name):
     return Member.objects.filter(lobby__uri=lobby_name)
 
