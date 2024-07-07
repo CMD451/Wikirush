@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AsyncSelect from 'react-select/async';
 import { searchForArticle } from '../../../lookup/lookup';
 var debounce = require('debounce-promise')

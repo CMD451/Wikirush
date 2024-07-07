@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState,useRef } from "react";
+import { useState,useRef } from "react";
 import { Wikipage } from './Wikipage';
 import { Hud } from './Hud';
 import { ArticlePlayerList } from './ArticlePlayerList';

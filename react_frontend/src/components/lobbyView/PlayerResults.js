@@ -17,7 +17,7 @@ export function PlayerResults(props) {
                         {page.article}
                     </td>
                     <td>
-                        {formatTime(page.time)}
+                        {isNaN(page.time) ? "--:--:--:--" : formatTime(page.time)}
                     </td>
                 </tr>
             )
@@ -42,7 +42,7 @@ export function PlayerResults(props) {
                     {props.player['username']}
                 </th>
                 <th>
-                    {formatTime(props.player['score'])}
+                    {isNaN(props.player['score']) ? "Not reached" : formatTime(props.player['score'])}
                 </th>
                 <th>
                     <button onClick={() => { setShowVisitedPages(n => !n) }} >{showVisitedPages ? "Hide" : "Show"}</button>

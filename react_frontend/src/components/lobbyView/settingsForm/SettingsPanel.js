@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect, useState } from "react";
 import { SettingsForm } from './SettingsForm';
 
 export function SettingsPanel(props) {

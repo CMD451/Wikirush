@@ -26,20 +26,19 @@ export function AvatarPicker(props) {
     }
 
     function generateAvatarUrl(index){
-        console.log()
         return `${process.env.PUBLIC_URL}` + avatarsPaths[index];
     }
 
     return (
         <div className="avatar-picker-container">
             <div className="arrow-img center-item" onClick={() => { handleNextButtonClick(-1) }} >
-                <img src={`${process.env.PUBLIC_URL}`+"./assets/img/arrow2.webp"} />
+                <img alt='left arrow' src={`${process.env.PUBLIC_URL}`+"./assets/img/arrow2.webp"} />
             </div>
             <div className="avatar-image-container">
                 <img className='picked-avatar' src={generateAvatarUrl(avatarIndex)} />
             </div>
             <div className="arrow-img arrow-right center-item" onClick={() => { handleNextButtonClick(1) }}>
-                <img src={`${process.env.PUBLIC_URL}`+"./assets/img/arrow2.webp"} />
+                <img alt='right arrow' src={`${process.env.PUBLIC_URL}`+"./assets/img/arrow2.webp"} />
             </div>
         </div>
     );

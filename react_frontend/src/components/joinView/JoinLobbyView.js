@@ -12,7 +12,7 @@ export const UserContext = React.createContext({
 
 export function JoinLobbyView() {
     const lobbyUri = useRef(null)
-    const [user, setUser] = useState({})
+    const user = useRef({})
     const [joined, setJoined] = useState(false)
     const [error,setError] = useState(null)
 
@@ -25,28 +25,27 @@ export function JoinLobbyView() {
         }
     },[])
 
-    function OnJoinLobby() {
+    function OnJoinLobby() {   
         //validate
         //if valid
-        if((!user.username)||(user.username.length > 15)||(user.username.length < 3)){
+        if((!user.current.username)||(user.current.username.length > 15)||(user.current.username.length < 3)){
             setError("Invalid username")
             return
         }
         if(lobbyUri.current === null || lobbyUri.current.length <= 0){
             lobbyUri.current = window.location.pathname.replace("/","");
         }
-        setUser(user)
         setJoined(true);
     }
     function generateContent() {
         if (joined) {
             return (
-                <UserContext.Provider value={{ user, setUser }}>
-                    <LobbyView uri={lobbyUri.current}/>
+                <UserContext.Provider value={user.current}>
+                    <LobbyView uri={lobbyUri.current} />
                 </UserContext.Provider>
             )
         }
-        return (<JoinForm onChange={setUser} onJoin={OnJoinLobby} error={error}/>)
+        return (<JoinForm onChange={(newUser)=>{user.current = newUser}} onJoin={OnJoinLobby} error={error}/>)
     }
    
     return (

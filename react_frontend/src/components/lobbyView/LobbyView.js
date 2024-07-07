@@ -13,13 +13,14 @@ import { WaitForEnd } from './WaitForEnd';
 
 
 export function LobbyView(props) {
-    const { user, setUser } = React.useContext(UserContext);
+    let user= React.useContext(UserContext)
     const [players, setPlayers] = useState([]);
-    //change ownerPk,ownerToken to ref
+
     const [ownerPk, setOwnerPk] = useState([0]);
     const [ownerToken, setOwnerToken] = useState([""]);
     const [results, setResults] = useState(null)
     const [currentUser, setCurrentUser] = useState(user)
+    
     const [settings, setSettings] = useState({
         startArticle: "Pet_door",
         endArticle: "Pet",
@@ -27,7 +28,8 @@ export function LobbyView(props) {
         endTimer:30
     })
     const isOwner = ownerPk == currentUser.pk
-    let isFirstRender = useRef(true);
+
+    setCallbacks();
 
     function handleSettingsChange(newSettings) {
         //maybe update owner settings directly with newSettings
@@ -51,11 +53,11 @@ export function LobbyView(props) {
         menu: (
             <React.Fragment>
                 <SettingsPanel settings={settings} onChange={handleSettingsChange} OnStartButtonClick={sendStartGameAction} isOwner={isOwner} />
-                <PlayerList players={players} currentPlayer={currentUser} ownerPk={ownerPk} />
+                <PlayerList players={[...players]} currentPlayer={currentUser} ownerPk={ownerPk} />
             </React.Fragment>
         ),
         game: (
-            <Game endArticle={settings['endArticle']} players={players}  startUrl={settings['startArticle']}
+            <Game endArticle={settings['endArticle']} players={[...players]}  startUrl={settings['startArticle']}
                 onPageVisit={sendPageVisitAction} onGoalReached={onGoalArticleReached} lang={settings['lang']} />
         ),
         unavailable: (
@@ -126,10 +128,10 @@ export function LobbyView(props) {
                     setPlayers(players => [...players, data['content']])
                     break;
                 case "fetch_members":
-                    setPlayers(data['content'].filter(member => (member.pk != currentUser.pk)))
+                    setPlayers(data['content'])
                     break;
                 case "user_left":
-                    setPlayers(players.filter((member) => (member.pk != data['content'].pk)))
+                    setPlayers(players.filter((member) => (member.pk !== data['content'].pk)))
                     break;
                 case 'owner_update':
                     setOwnerPk(data['content']);
@@ -146,22 +148,20 @@ export function LobbyView(props) {
                     setCurrentContent("game")
                     break;
                 case 'player_page_visit':
-                    console.log("Player visit")
                     let players_copy = [...players]
                     let player_index = players_copy.findIndex((player)=>player.pk == data['content']['member'])
                     players_copy[player_index]['current_article'] = data['content']['article']
                     setPlayers(players_copy)
-                    console.log(players)
                     break;
                 case 'settings_change':
-                    if(currentUser.pk != ownerPk)  setSettings(data['content']);
+                    if(currentUser.pk !== ownerPk)  setSettings(data['content']);
                     break;
                 case 'lobby_unavailable':
                     WebSocketInstance.disconnect()
                     setCurrentContent('unavailable')
                     break;
                 case 'end_article_reached':
-                    if (data['content'] != currentUser.pk) {
+                    if (data['content'] !== currentUser.pk) {
                         alert("End article reached")
                     }
                     break;
@@ -169,8 +169,9 @@ export function LobbyView(props) {
                     console.log(data['content'])
                     let resultData = data['content']['members'].map((member) => {
                         let score = NaN
+                        member['visitedPages'].unshift({'article':settings.startArticle,'time':0.0})
                         member['visitedPages'].every(page => {
-                            if (page['article'] == settings['endArticle']) {
+                            if (page['article'] === settings['endArticle']) {
                                 score = page['time']
                                 return false
                             }
@@ -178,7 +179,6 @@ export function LobbyView(props) {
                         });
                         member['score'] = score
                     })
-                    console.log(resultData)
                     resultData.sort((a, b) => {
                         if (a['score'] > b['score']) {
                             return 1;
@@ -189,8 +189,9 @@ export function LobbyView(props) {
                         return 0
                     })
                     setResults(data['content']['members'])
-                    console.log()
                     setCurrentContent('results')
+                    break;
+                default:
                     break;
 
             }
@@ -198,23 +199,16 @@ export function LobbyView(props) {
     }  
 
     useEffect(() => {
-        setCallbacks();
-    })
-    useEffect(() => {
         WebSocketInstance.connect(props.uri);
     }, [])
-    
+
     useEffect(() => {
-        if (isFirstRender) {
-            isFirstRender = false
-            return
-        }
         WebSocketInstance.sendMessage({
             action: "fetch_members",
             message: "package"
         })
 
-    }, [currentUser])
+    },[])
 
     return (
         <main>

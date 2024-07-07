@@ -1,29 +1,31 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect, useRef,useState } from "react";
 import '../../styles/join.css'
 import '../../styles/base.css'
 import { AvatarPicker } from './AvatarPicker';
 import { UsernameInput } from './UsernameInput';
-// import avatar from "../../assets/img/avatars/avatar.png"
 
 
 export function JoinForm(props) {
 
-    const [username,setUsername] = useState("")
-    const [avatarUrl,setAvatarUrl] = useState("")
+    const username = useRef("")
+    const avatarUrl = useRef("")
 
 
     function onAvatarChange(e){
-        setAvatarUrl(e);
+        avatarUrl.current = e
+        notifyOfChange()
     }
     function onUsernameChange(e){
-        setUsername(e);
+        username.current = e
+        notifyOfChange()
     }
-    useEffect(()=>{
+    function notifyOfChange(){
         if("onChange" in props){
-            props.onChange({"username":username,"avatarUrl":avatarUrl})
+            props.onChange({"username":username.current,"avatarUrl":avatarUrl.current})
         }
-    },[username,avatarUrl])
+    }
+
     return (
         <React.Fragment>
             <header className="flex-horizontal">
