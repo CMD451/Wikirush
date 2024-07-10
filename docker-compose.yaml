@@ -3,8 +3,6 @@ services:
     django_server: 
         container_name: django_backend
         build: ./django_backend
-        volumes: 
-            - ./django_backend:/code
         ports: 
           - "8000:8000"
         links:
@@ -16,7 +14,5 @@ services:
     frontend_react:
         container_name: react_frontend
         build: ./react_frontend
-        volumes:
-          - ./react_frontend:/code
         ports:
           - "3000:3000"
