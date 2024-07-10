@@ -126,7 +126,15 @@ def get_end_game_results(lobby):
     #optimize db queries
     lobby.members.prefetch_related('visitedPages')
     return LobbyMembersWithPagesSerializer(instance=lobby).data
-    
+
+@database_sync_to_async       
+def is_lobby_active(lobby):
+    return lobby.active
+
+@database_sync_to_async       
+def set_lobby_activity(lobby,state):
+    lobby.active = state 
+    lobby.save()   
 
 
     

@@ -14,6 +14,7 @@ class Lobby(models.Model):
     lobbyOwnerToken = models.TextField(max_length = 50,default="0000000")
     endTimer = models.IntegerField(default=30)
     started = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
     startArticle = models.TextField(default="Pet_door")
     endArticle = models.TextField(default="Pet")
     lang = models.TextField(default="en")

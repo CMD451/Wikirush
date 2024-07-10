@@ -5,7 +5,11 @@ import json
 from websocket.util import *
 from websocket.models import Member,Lobby
 from websocket.serializers import MemberSerializer
+import time
+import threading
 import asyncio
+import logging
+logger = logging.getLogger(__name__)
 
 
 
@@ -16,10 +20,13 @@ class GameConsumer(AsyncWebsocketConsumer):
         self.member_pk = 1
         if await is_lobby_none(self.room_name):
             await create_lobby(self.room_name)
+       
         await self.channel_layer.group_add(
         self.room_group_name,
         self.channel_name
     )
+        lobby = await get_lobby(self.room_name)
+        await set_lobby_activity(lobby,True)
         await self.accept()
 
     async def designate_as_owner(self):
@@ -93,11 +100,7 @@ class GameConsumer(AsyncWebsocketConsumer):
              }
         )
         print("Removing user:" + str(self.member_pk))
-        lobby = await get_lobby(self.room_name)
-        if(await get_lobby_members_count(lobby) <= 1):
-            await remove_lobby(lobby)
-        else:
-            await remove_member(self.member_pk,self.room_name)
+        await remove_member(self.member_pk,self.room_name)
         
 
     async def start_game_action(self,json_data):
@@ -158,7 +161,16 @@ class GameConsumer(AsyncWebsocketConsumer):
                 "content":await get_end_game_results(lobby)
             }
     )
+        
+    def delete_inactive_lobby(self,sleep_time):
+        time.sleep(sleep_time)
+        lobby = get_lobby_sync(self.room_name)
+        if(not lobby.active):
+            logger.info("Deleting lobby:",self.room_group_name)
+            lobby.delete()    
 
+
+    
     async def end_article_reached_action(self,json_data):
         await self.actions['page_visit'](self,json_data)
         await self.channel_layer.group_send(
@@ -187,7 +199,12 @@ class GameConsumer(AsyncWebsocketConsumer):
         #if deletion of member caused the lobby to be ownerless desigante new owner
         if not await is_lobby_owner_set(lobby) and await get_lobby_members_count(lobby) > 0:
             await self.designate_new_owner(await get_oldest_lobby_member(lobby))
-             
+        #if the are not any members left
+        if(await get_lobby_members_count(lobby) < 1):
+            await set_lobby_activity(lobby,False)
+            job_thread = threading.Thread(target=lambda:self.delete_inactive_lobby(10))
+            job_thread.start()
+
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
