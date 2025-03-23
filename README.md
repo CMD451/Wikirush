@@ -13,13 +13,29 @@ This is a multiplayer version of Wiki Game, also known as the Wikipedia race, is
 
 <p align="center">
     <img src="preview.gif" alt="Example of application usage">
-</p
-
+</p>
 
 ## Key points
 - WebSocket Communication
 - Lobby management(creating,joining,dynamic lobby owner)
 - Live view of other players current article
+
+## How to run
+
+
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Docker](https://www.docker.com/) From your command line:
+```bash
+# Clone this repository
+$ git clone https://github.com/CMD451/Wikirush
+
+# Go into the repository
+$ cd Wikirush
+
+# Run docker compose
+$ docker compose up
+```
+After containers are created frontend site should be available on: http://localhost:3000
+
 
 
 ## License
